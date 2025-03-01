@@ -1,1 +1,79 @@
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
 @import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* ------------------ Custom font --------------------- */
+  --font-sans: "Poppins", sans-serif;
+  --font-serif: "Roboto", sans-serif;
+  --font-mono: "Orbitron", sans-serif;
+
+  /* Light Blue (White to Light Blue) */
+  --color-light-50: #f8fbff;
+  --color-light-100: #f0f7ff;
+  --color-light-200: #e0efff;
+  --color-light-300: #c8e0ff;
+  --color-light-400: #aed0ff;
+  --color-light-500: #91beff;
+  --color-light-600: #75abff;
+  --color-light-700: #5b98ff;
+  --color-light-800: #3f84ff;
+  --color-light-900: #226eff;
+  --color-light-950: #095aff;
+
+  /* Gray (Neutral Grays) */
+  --color-gray-50: #f9fafb;
+  --color-gray-100: #f3f4f6;
+  --color-gray-200: #e5e7eb;
+  --color-gray-300: #d1d5db;
+  --color-gray-400: #9ca3af;
+  --color-gray-500: #6b7280;
+  --color-gray-600: #4b5563;
+  --color-gray-700: #374151;
+  --color-gray-800: #1f2937;
+  --color-gray-900: #111827;
+  --color-gray-950: #0a0f1b;
+
+  /* Black (True Black Shades) */
+  --color-black-50: #2a2a2e;
+  --color-black-100: #232326;
+  --color-black-200: #1d1d1f;
+  --color-black-300: #161618;
+  --color-black-400: #111113;
+  --color-black-500: #0c0c0e;
+  --color-black-600: #08080a;
+  --color-black-700: #050506;
+  --color-black-800: #030304;
+  --color-black-900: #010102;
+  --color-black-950: #000000; 
+
+  /* Deep Blue (Dark Navy Blue) */
+  --color-deepblue-50: #e8f0ff;
+  --color-deepblue-100: #d0e1ff;
+  --color-deepblue-200: #a8c3ff;
+  --color-deepblue-300: #7fa4ff;
+  --color-deepblue-400: #5785ff;
+  --color-deepblue-500: #2e67ff;
+  --color-deepblue-600: #1f53e0;
+  --color-deepblue-700: #183fc0;
+  --color-deepblue-800: #122ca0;
+  --color-deepblue-900: #0b1980;
+  --color-deepblue-950: #050c60; 
+
+  /* Purple (Soft Lavender to Deep Purple) */
+  --color-purple-50: #faf5ff;
+  --color-purple-100: #f3e8ff;
+  --color-purple-200: #e9d5ff;
+  --color-purple-300: #d8b4fe;
+  --color-purple-400: #c084fc;
+  --color-purple-500: #a855f7;
+  --color-purple-600: #9333ea;
+  --color-purple-700: #7e22ce;
+  --color-purple-800: #6b21a8;
+  --color-purple-900: #581c87;
+  --color-purple-950: #3b0764; 
+
+
+}
+

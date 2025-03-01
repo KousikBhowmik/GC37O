@@ -1,9 +1,35 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { ToastContainer } from "react-toastify";
+import Login from "./pages/Login.jsx";
+import Dashboard from "./pages/dashboard.jsx";
+import { Routes, Route } from "react-router-dom";
+import UserInfo from "./pages/UserInfo.jsx";
 const App = () => {
+  const [isDarkMode, setIsDarkMode] = useState(
+    localStorage.getItem("theme") === "dark"
+  );
+
+  const toggleDarkMode = () => {
+    const newTheme = isDarkMode ? "light" : "dark";
+    setIsDarkMode(!isDarkMode);
+    document.documentElement.classList.toggle("dark", !isDarkMode);
+    localStorage.setItem("theme", newTheme);
+  };
+
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [isDarkMode]);
 
   return (
-    <div>
+    <div className="relative">
+      <button onClick={toggleDarkMode} className="p-2 cursor-pointer bg-yellow-300  rounded-full absolute top-3 right-3">
+        mode
+      </button>
+      {/* ------------------------ Notification container ---------------------- */}
       <ToastContainer
         position="top-right"
         autoClose={5000}
@@ -16,7 +42,14 @@ const App = () => {
         limit={3}
         pauseOnHover
       />
-      App
+      {/* ------------------------ Main Page Routes ---------------------- */}
+      <div className="w-full h-screen">
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/user-info" element={<UserInfo />} />
+        </Routes>
+      </div>
     </div>
   );
 };
