@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
 import Login from "./pages/Login.jsx";
 import Dashboard from "./pages/dashboard.jsx";
@@ -26,7 +26,10 @@ const App = () => {
 
   return (
     <div className="relative">
-      <button onClick={toggleDarkMode} className="p-2 cursor-pointer bg-yellow-300  rounded-full absolute top-3 right-3">
+      <button
+        onClick={toggleDarkMode}
+        className="p-2 cursor-pointer bg-yellow-300  rounded-full absolute top-3 right-3"
+      >
         mode
       </button>
       {/* ------------------------ Notification container ---------------------- */}
@@ -41,6 +44,7 @@ const App = () => {
         draggable
         limit={3}
         pauseOnHover
+        theme={isDarkMode ? "light" : "dark"}
       />
       {/* ------------------------ Main Page Routes ---------------------- */}
       <div className="w-full h-screen">

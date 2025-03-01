@@ -1,7 +1,7 @@
 import sendEmail from "../configs/nodeMailer.js";
 import OtpModel from "../models/otpModel.js";
 import UserModel from "../models/userModel.js";
-import bcrypt from "bcryptjs";
+import bcrypt, { hash } from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { singupOtpTemplate } from "../utils/emailTemplate.js";
 
@@ -84,18 +84,21 @@ export const registerUser = async (req, res) => {
       .json({ success: false, message: "All field required" });
 
   try {
-    const hashPassword = bcrypt.hash(password, Number(process.env.SOLT_ROUNDS));
+    const hashPassword = await bcrypt.hash(
+      password,
+      Number(process.env.SOLT_ROUNDS)
+    );
 
-    const newUser = new UserModel({
+    console.log(email, hashPassword);
+
+    const user = await UserModel.create({
       email: email,
       password: hashPassword,
     });
 
-    const saveUser = await newUser.save();
-
-    if (saveUser) {
+    if (user) {
       const token = jwt.sign(
-        { userId: saveUser._id },
+        { userId: user._id },
         String(process.env.JWT_SECRET),
         {
           expiresIn: "7d",
@@ -112,7 +115,7 @@ export const registerUser = async (req, res) => {
         success: true,
         message: "User register successfully",
         user: {
-          profileStatus: saveUser.profileStatus,
+          profileStatus: user.profileStatus,
         },
       });
     } else
