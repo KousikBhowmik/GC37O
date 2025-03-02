@@ -5,7 +5,7 @@ import dotenv from "dotenv";
 import admin from "firebase-admin";
 import connectDB from "./configs/mongoDB.js";
 import morganMiddleware from "./middlewares/morganMiddleware.js";
-import logger from "./logs/logger.js";
+import logger from './libs/logger.js'
 import authRouter from "./routes/authRoutes.js";
 
 dotenv.config();

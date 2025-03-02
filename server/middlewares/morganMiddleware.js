@@ -1,5 +1,5 @@
 import morgan from "morgan";
-import logger from "../logs/logger.js";
+import logger from "../libs/logger.js";
 
 const morganFormat =
   ":method :url :status :response-time ms - :res[content-length]";
