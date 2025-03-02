@@ -23,7 +23,7 @@ app.use(
 );
 // @ts-ignore
 app.use(cookieParser());
-app.use(morganMiddleware);
+// app.use(morganMiddleware);
 app.use(express.json());
 
 // ------------------ Fibre Base connection -------------------

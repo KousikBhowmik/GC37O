@@ -1,5 +1,4 @@
 import nodemailer from "nodemailer";
-import logger from "../libs/logger.js";
 import dotenv from 'dotenv'
 
 dotenv.config()
@@ -24,7 +23,7 @@ const sendEmail = async (to, subject, data) => {
     });
     return send?.messageId.length > 0;
   } catch (error) {
-    logger.error(`Failed to send EMAIL`);
+    console.error(`Failed to send EMAIL`);
   }
 };
 
