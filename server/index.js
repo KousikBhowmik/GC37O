@@ -4,8 +4,6 @@ import cors from "cors";
 import dotenv from "dotenv";
 import admin from "firebase-admin";
 import connectDB from "./configs/mongoDB.js";
-import morganMiddleware from "./middlewares/morganMiddleware.js";
-import logger from './libs/logger.js'
 import authRouter from "./routes/authRoutes.js";
 
 dotenv.config();
@@ -23,7 +21,6 @@ app.use(
 );
 // @ts-ignore
 app.use(cookieParser());
-// app.use(morganMiddleware);
 app.use(express.json());
 
 // ------------------ Fibre Base connection -------------------
@@ -63,5 +60,5 @@ app.use("/api/authentication", authRouter);
 const PORT = process.env.PORT || 8001;
 
 app.listen(PORT, () => {
-  logger.info(`Server is running on ${PORT}`);
+  console.log(`Server is running on ${PORT}`);
 });
