@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
 import Login from "./pages/Login.jsx";
-import Dashboard from "./pages/dashboard.jsx";
+import Dashboard from "./pages/Dashboard.jsx";
 import { Routes, Route } from "react-router-dom";
 import UserInfo from "./pages/UserInfo.jsx";
 const App = () => {
