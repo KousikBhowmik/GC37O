@@ -1,16 +1,18 @@
 import React, { useState } from "react";
-
 import { FaRegEye } from "react-icons/fa6";
 import { FaRegEyeSlash } from "react-icons/fa";
 
-const LoginForm = ({
-  loginPage,
-  setLoginPage,
-  emailInput,
-  setEmailInput,
-  passwordInput,
-  setPasswordInput,
-}) => {
+
+const LoginForm = (props) => {
+  const {
+    loginPage,
+    setLoginPage,
+    emailInput,
+    setEmailInput,
+    passwordInput,
+    setPasswordInput,
+    setIsLoading,
+  } = props;
   const [showPassword, setShowPassword] = useState(true);
   return (
     <div className="w-full lg:px-8 flex flex-col gap-7 ">

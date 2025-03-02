@@ -24,8 +24,10 @@ const App = () => {
     }
   }, [isDarkMode]);
 
+
   return (
     <div className="relative">
+     
       <button
         onClick={toggleDarkMode}
         className="p-2 cursor-pointer bg-yellow-300  rounded-full absolute top-3 right-3"

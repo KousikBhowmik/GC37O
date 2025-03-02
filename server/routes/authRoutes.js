@@ -1,10 +1,12 @@
 import { Router } from "express";
-import { otpSendApi, otpVerifyApi, registerUser } from "../controllers/authController.js";
+import { loginWithGoogle, registerUser } from "../controllers/authController.js";
+import { otpSendApi, otpVerifyApi } from "../controllers/otpController.js";
 
 const authRouter = Router();
 
 authRouter.post("/sendOtp", otpSendApi);
 authRouter.post("/verifyOtp", otpVerifyApi);
 authRouter.post("/singUp", registerUser);
+authRouter.post("/loginWithGoogle", loginWithGoogle);
 
 export default authRouter;

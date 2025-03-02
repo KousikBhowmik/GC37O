@@ -12,7 +12,7 @@ dotenv.config();
 
 const app = express();
 
-// ****************** Middlewares ********************
+// -------------------- Middlewares ----------------------
 app.use(
   cors({
     // @ts-ignore
@@ -26,16 +26,40 @@ app.use(cookieParser());
 app.use(morganMiddleware);
 app.use(express.json());
 
-// ************** DB connection ****************
+// ------------------ Fibre Base connection -------------------
+
+// @ts-ignore
+const serviceAccount = JSON.parse(process.env.FB_SDK_SECRET);
+
+admin.initializeApp({
+  credential: admin.credential.cert({
+    ...serviceAccount,
+    privateKey: serviceAccount.private_key.replace(/\\n/g, "\n"),
+  }),
+});
+
+admin
+  .auth()
+  .listUsers(1) //-------------- Fetching 1 user for test ------------------
+  .then(() => {
+    console.log("Firebase connected successfully!");
+  })
+  .catch((error) => {
+    console.error("Firebase didn't connect: ", error);
+  });
+
+// ------------------ DB connection -------------------
+
 await connectDB();
 
-// *************** Routes *********************
+// -------------------- Routes -------------------------
+
 app.get("/", (_, res) => {
   res.send("server is running!");
 });
 app.use("/api/authentication", authRouter);
 
-// **************** Server starting ***************
+// ----------------- Server starting ------------------
 const PORT = process.env.PORT || 8001;
 
 app.listen(PORT, () => {

@@ -6,24 +6,27 @@ import {
   emailCheck,
   otpCheck,
   passwrodCheck,
-} from "../../utils/helperFunctions.js";
-import { apiClient } from "../../libs/axiosConfig.js";
+} from "../utils/helperFunctions.js";
+import { apiClient } from "../libs/axiosConfig.js";
 import {
   otpSendRoute,
   otpVerifyRoute,
   singUpRoute,
-} from "../../utils/constant.js";
+} from "../utils/constant.js";
 import { useNavigate } from "react-router-dom";
 
-const SingupForm = ({
-  loginPage,
-  setLoginPage,
-  emailInput,
-  setEmailInput,
-  passwordInput,
-  setPasswordInput,
-}) => {
-  const [singupState, setSingupState] = useState("sendOtp");
+const SingupForm = (props) => {
+  const {
+    loginPage,
+    setLoginPage,
+    emailInput,
+    setEmailInput,
+    passwordInput,
+    setPasswordInput,
+    setIsLoading,
+    singupState,
+    setSingupState,
+  } = props;
   const [showPassword, setShowPassword] = useState(true);
   const [showReenter, setShowReenter] = useState(true);
   const [reEnterPasssword, setReEnterPasssword] = useState("");
@@ -33,6 +36,7 @@ const SingupForm = ({
 
   const singUpOTPsend = async () => {
     if (!emailCheck(emailInput)) return;
+    setIsLoading((prev) => !prev);
     // @ts-ignore
     const { data } = await apiClient.post(
       otpSendRoute,
@@ -41,14 +45,15 @@ const SingupForm = ({
     );
 
     if (data?.success) {
-      toast.success("OTP sent to you email")
-      setSingupState("verifyOtp");}
-    else toast.error(data?.message);
+      toast.success("OTP sent to you email");
+      setSingupState("verifyOtp");
+    } else toast.error(data?.message);
+    setIsLoading((prev) => !prev);
   };
 
   const otpVerify = async () => {
     if (!otpCheck(otpInput)) return;
-
+    setIsLoading((prev) => !prev);
     // @ts-ignore
     const { data } = await apiClient.post(
       otpVerifyRoute,
@@ -61,12 +66,13 @@ const SingupForm = ({
 
     if (data?.success) {
       setOtpInput("");
-      toast.success("OTP Verified")
+      toast.success("OTP Verified");
       setSingupState("singUp");
     } else {
       toast.error(data?.message);
       setSingupState("sendOtp");
     }
+    setIsLoading((prev) => !prev);
   };
 
   const userRegister = async () => {
@@ -84,16 +90,13 @@ const SingupForm = ({
     );
     if (data?.success) {
       console.log(data);
-      toast.success("SingUp successfully 🥳")
-      setEmailInput("");
-      setPasswordInput("");
-      setReEnterPasssword("");
-      setSingupState("singUp");
-      setLoginPage("login");
-      navigate("/user-info");
+      toast.success("SingUp successfully 🥳");
+      setIsLoading((prev) => !prev);
+      navigate("/dashboard");
     } else {
       toast.error(data?.message);
       setSingupState("sendOtp");
+      setIsLoading((prev) => !prev);
     }
   };
 
@@ -124,8 +127,8 @@ const SingupForm = ({
         <div className="flex flex-col gap-7">
           <div className="relative">
             <input
-            value={passwordInput}
-            onChange={(e) => setPasswordInput(e.target.value)}
+              value={passwordInput}
+              onChange={(e) => setPasswordInput(e.target.value)}
               className="w-full placeholder:text-gray-500 px-3 py-2 rounded-md border-[2px] dark:text-gray-300  border-black-400 dark:border-gray-500 outline-blue-500 dark:outline-white "
               type={showPassword ? "password" : "text"}
               placeholder="Enter password"
@@ -145,8 +148,8 @@ const SingupForm = ({
 
           <div className="relative">
             <input
-            value={reEnterPasssword}
-            onChange={(e) => setReEnterPasssword(e.target.value)}
+              value={reEnterPasssword}
+              onChange={(e) => setReEnterPasssword(e.target.value)}
               className=" w-full placeholder:text-gray-500 px-3 py-2 rounded-md border-[2px] dark:text-gray-300  border-black-400 dark:border-gray-500 outline-blue-500 dark:outline-white "
               type={showReenter ? "password" : "text"}
               placeholder="Re-enter password"

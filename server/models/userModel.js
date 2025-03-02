@@ -7,29 +7,29 @@ const userSchema = new mongoose.Schema(
       required: [true, "Email is required"],
       unique: true,
     },
+    passwordType: {
+      type: String,
+      enum: ["google", "custom"],
+      default: "custom",
+    },
     password: {
       type: String,
       required: [true, "Password is required"],
     },
-    profile: {
-      firstName: {
-        type: String,
-        required: false,
-      },
-      lastName: {
-        type: String,
-        required: false,
-      },
-      profilePic: {
-        type: String,
-        required: false,
-        default: ""
-      },
+    name: {
+      type: String,
+      required: false,
     },
-    profileStatus:{
-      type: Boolean,
-      default: false
-    }
+    profilePic: {
+      type: String,
+      required: false,
+      default: "",
+    },
+    profileStatus: {
+      type: String,
+      enum: ["active", "blocked", "deleted"],
+      default: "active",
+    },
     // tasks: [
     //   {
     //     type: mongoose.Schema.Types.ObjectId,
