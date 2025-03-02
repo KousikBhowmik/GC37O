@@ -24,6 +24,8 @@ const App = () => {
     }
   }, [isDarkMode]);
 
+  // ready to deploay
+
 
   return (
     <div className="relative">
