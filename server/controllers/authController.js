@@ -72,7 +72,7 @@ export const loginWithGoogle = async (req, res) => {
         email: email,
         passwordType: "google",
         password: hashPassword,
-        name: name || `gcuser${getCount}`,
+        name: name || `GCUSER${getCount}`,
         profilePic: picture,
       });
     }
