@@ -10,6 +10,8 @@ dotenv.config();
 
 const app = express();
 
+// const PORT = process.env.PORT || 8001;
+
 // -------------------- Middlewares ----------------------
 app.use(
   // cors()
@@ -53,13 +55,12 @@ await connectDB();
 // -------------------- Routes -------------------------
 
 app.get("/", (_, res) => {
-  res.send("server is running!");
+  res.send("server is running on !");
 });
 app.use("/api/authentication", authRouter);
 
 // ----------------- Server starting ------------------
-const PORT = process.env.PORT || 8001;
 
-app.listen(PORT, () => {
-  console.log(`Server is running on ${PORT}`);
-});
+// app.listen(PORT, () => {
+//   console.log(`Server is running on ${PORT}`);
+// });
