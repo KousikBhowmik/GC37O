@@ -64,3 +64,5 @@ app.use("/api/authentication", authRouter);
 // app.listen(PORT, () => {
 //   console.log(`Server is running on ${PORT}`);
 // });
+
+export default app;
