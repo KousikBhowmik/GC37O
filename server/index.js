@@ -10,16 +10,15 @@ dotenv.config();
 
 const app = express();
 
-
 // -------------------- Middlewares ----------------------
 app.use(
-  cors()
-  // cors({
-  //   // @ts-ignore
-  //   // origin: [process.env.CLIENT_URL],
-  //   methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
-  //   credentials: true,
-  // })
+  // cors()
+  cors({
+    // @ts-ignore
+    origin: [process.env.CLIENT_URL],
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+    credentials: true,
+  })
 );
 // @ts-ignore
 app.use(cookieParser());
