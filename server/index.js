@@ -10,7 +10,6 @@ dotenv.config();
 
 const app = express();
 
-// ready to deplay
 
 // -------------------- Middlewares ----------------------
 app.use(

@@ -24,7 +24,6 @@ const App = () => {
     }
   }, [isDarkMode]);
 
-  // ready to deploay
 
 
   return (

@@ -3,11 +3,4 @@ import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  server: {
-    proxy: {
-      // @ts-ignore
-      "/api": import.meta.env.VITE_SERVER_URL,
-    },
-  },
 });
-
