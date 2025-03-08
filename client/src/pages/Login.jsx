@@ -10,6 +10,7 @@ import { apiClient } from "../libs/axiosConfig.js";
 import { googleLoginRoute } from "../utils/constant.js";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { userLoggedUser } from "../store/useStore.js";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -30,7 +31,8 @@ const Login = () => {
   const [singupState, setSingupState] = useState("sendOtp");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-
+  const { setLoggedUser } = userLoggedUser();
+  
   const loginWithGoogle = async () => {
     try {
       setIsLoading((prev) => !prev);
@@ -46,14 +48,21 @@ const Login = () => {
       if (data?.success) {
         console.log(data);
         toast.success("Google login succesful 🥳");
+        setLoggedUser(data.user);
         setIsLoading((prev) => !prev);
-        navigate("/dashboard");
+        navigate("/");
       } else {
         toast.error(data?.message);
+        setLoggedUser("");
         setIsLoading((prev) => !prev);
       }
     } catch (error) {
-      toast.error(error.message);
+      if (error.code === "auth/popup-closed-by-user") {
+        toast.error("Sign-in cancelled!");
+      } else {
+        toast.error("Something went wrong");
+      }
+      setLoggedUser("");
       setIsLoading((prev) => !prev);
     }
   };
@@ -82,7 +91,6 @@ const Login = () => {
           {/* ------------------------- Login and sing up forms ------------------------ */}
           {loginPage === "login" ? (
             <LoginForm
-              loginPage={loginPage}
               setLoginPage={setLoginPage}
               emailInput={emailInput}
               setEmailInput={setEmailInput}

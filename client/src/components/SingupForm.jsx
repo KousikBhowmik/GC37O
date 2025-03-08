@@ -14,6 +14,7 @@ import {
   singUpRoute,
 } from "../utils/constant.js";
 import { useNavigate } from "react-router-dom";
+import { userLoggedUser } from "../store/useStore.js";
 
 const SingupForm = (props) => {
   const {
@@ -31,6 +32,7 @@ const SingupForm = (props) => {
   const [showReenter, setShowReenter] = useState(true);
   const [reEnterPasssword, setReEnterPasssword] = useState("");
   const [otpInput, setOtpInput] = useState("");
+  const { setLoggedUser } = userLoggedUser();
 
   const navigate = useNavigate();
 
@@ -89,12 +91,12 @@ const SingupForm = (props) => {
       { withCredentials: true }
     );
     if (data?.success) {
-      console.log(data);
       toast.success("SingUp successfully 🥳");
+      setLoggedUser(data.user);
       setIsLoading((prev) => !prev);
-      navigate("/dashboard");
     } else {
       toast.error(data?.message);
+      setLoggedUser("");
       setSingupState("sendOtp");
       setIsLoading((prev) => !prev);
     }

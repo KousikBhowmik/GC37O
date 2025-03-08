@@ -4,6 +4,7 @@ import Login from "./pages/Login.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import { Routes, Route } from "react-router-dom";
 import UserInfo from "./pages/UserInfo.jsx";
+import LoginValid from "./components/LoginValid.jsx";
 const App = () => {
   const [isDarkMode, setIsDarkMode] = useState(
     localStorage.getItem("theme") === "dark"
@@ -24,11 +25,8 @@ const App = () => {
     }
   }, [isDarkMode]);
 
-
-
   return (
     <div className="relative">
-     
       <button
         onClick={toggleDarkMode}
         className="p-2 cursor-pointer bg-yellow-300  rounded-full absolute top-3 right-3"
@@ -52,9 +50,14 @@ const App = () => {
       {/* ------------------------ Main Page Routes ---------------------- */}
       <div className="w-full h-screen">
         <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/user-info" element={<UserInfo />} />
+          <Route
+            path="/"
+            element={
+              <LoginValid>
+                <Dashboard />
+              </LoginValid>
+            }
+          />
         </Routes>
       </div>
     </div>

@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-export const useCurrentPage = create((set) => {
-  currPage: "Dashboard";
-  setCurrPage: (value) => set((state) => ({ currPage: value }));
-});
+export const userLoggedUser = create((set) => ({
+  loggedUser: "",
+  setLoggedUser: (value) => set(() => ({ loggedUser: value })),
+}));
