@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 const TasksCom = () => {
-  return (
-    <div>TasksCom</div>
-  )
-}
+  return <div>TasksCom</div>;
+};
 
-export default TasksCom
+export default TasksCom;

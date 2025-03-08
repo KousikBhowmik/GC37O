@@ -46,7 +46,10 @@ const Navbar = ({ activeState, setActiveState }) => {
                 Account Settings
               </p>
               <div
-                onClick={toggleDarkMode}
+                onClick={() => {
+                  toggleDarkMode();
+                  setIsProfileCard(!isProfileCard);
+                }}
                 className="flex justify-between items-center px-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-[#4545455b] rounded-md py-2 "
               >
                 <p className=" text-gray-600 dark:text-gray-400    hover:text-black  dark:hover:text-white ">
@@ -73,16 +76,16 @@ const Navbar = ({ activeState, setActiveState }) => {
       <div>
         <ul className="flex text-gray-500 text-sm font-serif gap-2 ">
           <li
-            onClick={() => setActiveState("all")}
+            onClick={() => setActiveState("home")}
             className={`relative cursor-pointer py-1 px-4 hover:bg-gray-200 dark:hover:bg-[#ffffff20] dark:hover:text-white  hover:text-black rounded-sm 
                 after:absolute after:left-0 after:bottom-0 after:h-0.5 after:bg-black dark:after:bg-white 
               after:transition-all after:duration-300  ${
-                activeState === "all"
+                activeState === "home"
                   ? "after:w-full text-black dark:text-white"
                   : "after:w-0"
               }`}
           >
-            All
+            Home
           </li>
           <li
             onClick={() => setActiveState("tasks")}
