@@ -1,7 +1,12 @@
 import React from "react";
 
 const TasksCom = () => {
-  return <div>TasksCom</div>;
+  
+  return (
+    <div>
+      
+    </div>
+  );
 };
 
 export default TasksCom;

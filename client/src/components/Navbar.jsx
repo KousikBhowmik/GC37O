@@ -19,12 +19,7 @@ const Navbar = ({ activeState, setActiveState }) => {
         >
           GC37O
         </h1>
-        <div
-          onClick={toggleDarkMode}
-          className="dark:text-white cursor-pointer"
-        >
-          mode
-        </div>
+
         <div className="flex gap-5 items-center">
           <div className="relative">
             <CgProfile
