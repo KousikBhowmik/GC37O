@@ -1,4 +1,5 @@
 import React from "react";
+import TaskCardSmall from "./TaskCardSmall.jsx";
 
 const YourTasksCom = () => {
   const tempTasks = [
@@ -88,21 +89,18 @@ const YourTasksCom = () => {
     },
   ];
   return (
-    <div>
-      <h1>Your tasks</h1>
-      <div>
-        {tempTasks
-          .slice(0, 5)
-          .map(({ heading, description, startTime, endTime, status }, index) => (
-            <div key={index}>
-                <div>
-                    <h1>{heading}</h1>
-                    <p>{status}</p>
-                </div>
-               
-            </div>
-          ))}
-      </div>
+    <div className="flex flex-col w-full dark:text-white border border-gray-300 dark:border-gray-700 rounded-md px-4 py-2 bg-gray-200 dark:bg-[#0a0a0a] gap-2 ">
+      <h1 className="py-2 text-xl font-semibold  ">Your tasks</h1>
+
+      {tempTasks.slice(0, 5).map((value, index) => (
+        <TaskCardSmall key={index} cardValue={value} />
+      ))}
+
+      {tempTasks.length > 5 && (
+        <button className="py-1 rounded-md mb-2 cursor-pointer text-white dark:text-black w-full  bg-blue-500 dark:bg-white ">
+          Show more
+        </button>
+      )}
     </div>
   );
 };
