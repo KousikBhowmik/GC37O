@@ -97,7 +97,7 @@ const YourTasksCom = () => {
       ))}
 
       {tempTasks.length > 5 && (
-        <button className="py-1 rounded-md mb-2 cursor-pointer text-white dark:text-black w-full  bg-blue-500 dark:bg-white ">
+        <button className="py-1 rounded-md mb-2 cursor-pointer text-white -black w-full  bg-blue-500  ">
           Show more
         </button>
       )}

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { IoClose } from "react-icons/io5";
 import {
   getYear,
   getMonth,
@@ -33,14 +34,21 @@ const TaskCardSmall = ({ cardValue }) => {
       <div className="flex items-center justify-between">
         <p className="text-black">{cardData.heading}</p>
         <div className="relative">
-          <BsThreeDotsVertical
-            onClick={() => {
-              {
-                setShowEdit(!showEidt);
-              }
-            }}
-            className=" text-gray-400 hover:text-black "
-          />
+          {!showEidt ? (
+            <BsThreeDotsVertical
+              onClick={() => {
+                setShowEdit((prev) => !prev);
+              }}
+              className=" text-gray-400 hover:text-black "
+            />
+          ) : (
+            <IoClose
+              onClick={() => {
+                setShowEdit((prev) => !prev);
+              }}
+              className=" text-gray-400 hover:text-black "
+            />
+          )}
           {showEidt && (
             <div className="absolute top-0 left-4 w-[100px] rounded-md  flex flex-col justify-between bg-white border border-gray-300 p-2">
               <p
@@ -54,10 +62,19 @@ const TaskCardSmall = ({ cardValue }) => {
                     : "text-red-500"
                 }  pl-1 text-sm   `}
               >
-                {cardData.status}
+                {cardData.status === "todo"
+                  ? "Todo"
+                  : cardData.status === "progress"
+                  ? "Progress"
+                  : cardData.status == "completed"
+                  ? "completed"
+                  : "Pending"}
               </p>
               <p className=" text-gray-500 pl-1 text-sm   hover:text-black">
                 Edit task
+              </p>
+              <p className=" text-red-400 pl-1 text-sm   hover:text-red-500">
+                Delete 
               </p>
             </div>
           )}

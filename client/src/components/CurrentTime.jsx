@@ -17,7 +17,7 @@ const CurrentTime = () => {
         {format(currentTime, "EEEE, dd MMMM yyyy")}
       </h2>
       <h1 className="text-2xl font-semibold mt-2">
-        {format(currentTime, "hh:mm:ss a")}
+        {format(currentTime, "hh:mm a")}
       </h1>
     </div>
   );
