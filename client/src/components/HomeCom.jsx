@@ -2,6 +2,7 @@ import React from "react";
 import TimeAndCalendarCom from "./TimeAndCalendarCom.jsx";
 import ProgressCom from "./ProgressCom.jsx";
 import YourTasksCom from "./YourTasksCom.jsx";
+import YourEventsCom from "./YourEventsCom.jsx";
 
 const HomeCom = () => {
   return (
@@ -15,7 +16,9 @@ const HomeCom = () => {
         <YourTasksCom/>
       </div>
       {/* ------------------------------- Events Component ---------------------------- */}
-      <div>Events</div>
+      <div className="px-3">
+        <YourEventsCom/>
+      </div>
       {/* ---------------------------- Time & CAlender Component ---------------------- */}
       <div className="relative">
         <div className="absolute left-0 top-0 w-full">

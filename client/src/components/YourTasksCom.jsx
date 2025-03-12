@@ -1,5 +1,6 @@
 import React from "react";
 import TaskCardSmall from "./TaskCardSmall.jsx";
+import { LuCat } from "react-icons/lu";
 
 const YourTasksCom = () => {
   const tempTasks = [
@@ -88,7 +89,12 @@ const YourTasksCom = () => {
       status: "completed",
     },
   ];
-  return (
+  return tempTasks.length === 0 ? (
+    <div className=" h-[440px] flex  w-full flex-col items-center justify-center dark:text-white border border-gray-300 dark:border-gray-700 rounded-md p-4  bg-gray-200 dark:bg-[#0a0a0a] gap-5">
+      <LuCat className="text-[200px]" />
+      <h1 className="text-3xl font-semibold">Add Tasks</h1>
+    </div>
+  ) : (
     <div className="flex flex-col w-full dark:text-white border border-gray-300 dark:border-gray-700 rounded-md px-4 py-2 bg-gray-200 dark:bg-[#0a0a0a] gap-2 ">
       <h1 className="py-2 text-xl font-semibold  ">Your tasks</h1>
 
@@ -97,7 +103,7 @@ const YourTasksCom = () => {
       ))}
 
       {tempTasks.length > 5 && (
-        <button className="py-1 rounded-md mb-2 cursor-pointer text-white -black w-full  bg-blue-500  ">
+        <button className="py-1 rounded-md my-2 cursor-pointer text-white bg-black w-full  dark:bg-blue-500  ">
           Show more
         </button>
       )}
