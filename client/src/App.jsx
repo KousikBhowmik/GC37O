@@ -1,12 +1,16 @@
 import React, { useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 import Dashboard from "./pages/Dashboard.jsx";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import LoginValid from "./components/LoginValid.jsx";
 import { useDarkMode } from "./store/useStore.js";
+import Login from "./pages/Login.jsx";
+import HomeCom from "./components/HomeCom.jsx";
+import TasksCom from "./components/TasksCom.jsx";
+import EventsCom from "./components/EventsCom.jsx";
 const App = () => {
   const { isDarkMode } = useDarkMode();
-  
+
   useEffect(() => {
     if (isDarkMode) {
       document.documentElement.classList.add("dark");
@@ -16,7 +20,6 @@ const App = () => {
       localStorage.setItem("theme", "light");
     }
   }, [isDarkMode]);
-
 
   return (
     <div className="relative">
@@ -37,14 +40,22 @@ const App = () => {
       {/* ------------------------ Main Page Routes ---------------------- */}
       <div className="w-full h-screen">
         <Routes>
+          <Route path="/" element={<Navigate to="/dashboard" />} />
           <Route
-            path="/"
+            path="/dashboard"
             element={
-              <Dashboard />
               // <LoginValid>
               // </LoginValid>
+                <Dashboard />
             }
-          />
+          >
+            <Route index element={<Navigate to="home" replace />} />
+            <Route path="home" element={<HomeCom />} />
+            <Route path="tasks" element={<TasksCom />} />
+            <Route path="events" element={<EventsCom />} />
+          </Route>
+
+          <Route path="/login" element={<Login />} />
         </Routes>
       </div>
     </div>

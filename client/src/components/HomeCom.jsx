@@ -6,21 +6,21 @@ import YourEventsCom from "./YourEventsCom.jsx";
 
 const HomeCom = () => {
   return (
-    <div className="px-[4vw] grid grid-cols-4 pt-4  w-full">
+    <div className="px-[4vw] pb-4 grid  sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 pt-4 gap-5 md:gap-0  w-full">
       {/* ------------------------- Progress and Add taks/event com --------------------------- */}
-      <div className="relative">
-        <ProgressCom />
-      </div>
+
+      <ProgressCom />
+
       {/* ------------------------------- Tasks Componet ------------------------------ */}
-      <div className="px-3">
-        <YourTasksCom/>
+      <div className=" px-3">
+        <YourTasksCom />
       </div>
       {/* ------------------------------- Events Component ---------------------------- */}
       <div className="px-3">
-        <YourEventsCom/>
+        <YourEventsCom />
       </div>
       {/* ---------------------------- Time & CAlender Component ---------------------- */}
-      <div className="relative">
+      <div className="relative hidden xl:flex ">
         <div className="absolute left-0 top-0 w-full">
           <TimeAndCalendarCom />
         </div>

@@ -71,7 +71,9 @@ const Navbar = ({ activeState, setActiveState }) => {
       <div>
         <ul className="flex text-gray-500 text-sm font-serif gap-2 ">
           <li
-            onClick={() => setActiveState("home")}
+            onClick={() => {setActiveState("home")
+              navigate("/dashboard");
+            }}
             className={`relative cursor-pointer py-1 px-4 hover:bg-gray-200 dark:hover:bg-[#ffffff20] dark:hover:text-white  hover:text-black rounded-sm 
                 after:absolute after:left-0 after:bottom-0 after:h-0.5 after:bg-black dark:after:bg-white 
               after:transition-all after:duration-300  ${
@@ -83,7 +85,9 @@ const Navbar = ({ activeState, setActiveState }) => {
             Home
           </li>
           <li
-            onClick={() => setActiveState("tasks")}
+            onClick={() => {setActiveState("tasks")
+              navigate("/dashboard/tasks");
+            }}
             className={`relative cursor-pointer py-1 px-4 hover:bg-gray-200 dark:hover:bg-[#ffffff20] dark:hover:text-white  hover:text-black rounded-sm 
               after:absolute after:left-0 after:bottom-0 after:h-0.5 after:bg-black dark:after:bg-white 
               after:transition-all after:duration-300 ${
@@ -95,7 +99,9 @@ const Navbar = ({ activeState, setActiveState }) => {
             Tasks
           </li>
           <li
-            onClick={() => setActiveState("events")}
+            onClick={() => {setActiveState("events")
+              navigate("/dashboard/events");
+            }}
             className={`relative cursor-pointer py-1 px-4 hover:bg-gray-200 dark:hover:bg-[#ffffff20] dark:hover:text-white  hover:text-black rounded-sm 
               after:absolute after:left-0 after:bottom-0 after:h-0.5 after:bg-black dark:after:bg-white 
               after:transition-all after:duration-300 ${

@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React, { Profiler, useState } from "react";
+import React, { Profiler, useEffect, useState } from "react";
 import LoginForm from "../components/LoginForm.jsx";
 import SingupForm from "../components/SingupForm.jsx";
 import { FcGoogle } from "react-icons/fc";
@@ -11,6 +11,7 @@ import { googleLoginRoute } from "../utils/constant.js";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { userLoggedUser } from "../store/useStore.js";
+import Cookies from "js-cookie";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -32,7 +33,7 @@ const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const { setLoggedUser } = userLoggedUser();
-  
+
   const loginWithGoogle = async () => {
     try {
       setIsLoading((prev) => !prev);
@@ -66,6 +67,12 @@ const Login = () => {
       setIsLoading((prev) => !prev);
     }
   };
+
+  // useEffect(() => {
+  //   if (Cookies.get("user-token")) {
+  //     navigate("/dashboard");
+  //   }
+  // }, []);
 
   return (
     <div className="w-full h-screen flex items-center justify-center bg-blue-100 dark:bg-black-400  ">
