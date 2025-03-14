@@ -30,7 +30,10 @@ const EventCardSmall = ({ cardValue }) => {
     setCardData({ ...cardData, date: date, time: time });
   }, [cardValue]);
   return (
-    <div className=" flex flex-col w-full bg-white cursor-pointer p-2  rounded-md  transition duration-200 hover:scale-105 ">
+    <div
+      onMouseLeave={() => setShowEdit(false)}
+      className=" flex flex-col w-full bg-white cursor-pointer p-2  rounded-md  transition duration-200 hover:scale-105 "
+    >
       <div className="flex items-center justify-between">
         <p className="text-black">{cardData.heading}</p>
         <div className="relative">
@@ -52,7 +55,7 @@ const EventCardSmall = ({ cardValue }) => {
           {showEidt && (
             <div className="absolute top-0 right-4 w-[100px] z-10 rounded-md  flex flex-col justify-between bg-white border border-gray-300 p-2">
               <p className=" text-gray-500 pl-1 text-sm   hover:text-black">
-                Edit task
+                Edit event
               </p>
               <p className=" text-red-400 pl-1 text-sm   hover:text-red-500">
                 Delete

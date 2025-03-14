@@ -31,7 +31,7 @@ const TaskCardSmall = ({ cardValue }) => {
   }, [cardValue]);
 
   return (
-    <div className=" flex flex-col w-full bg-white cursor-pointer p-2  rounded-md  transition duration-200 hover:scale-105 ">
+    <div onMouseLeave={() => setShowEdit(false)} className=" flex flex-col w-full bg-white cursor-pointer p-2  rounded-md  transition duration-200 hover:scale-105 ">
       <div className="flex items-center justify-between">
         <p className="text-black">{cardData.heading}</p>
         <div className="relative">

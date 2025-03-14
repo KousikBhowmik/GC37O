@@ -105,6 +105,10 @@ const TasksCom = () => {
     setUserTasks(tempTasks);
   }, []);
 
+  const deleteHandel = (index) => {
+    setUserTasks(userTasks.filter((_, i) => i != index));
+  };
+
   return userTasks.length !== 0 ? (
     <div className="px-[4%]  w-full pt-2 flex flex-col gap-4">
       <h1 className="dark:text-white text-2xl mt-2">All tasks</h1>
@@ -114,7 +118,12 @@ const TasksCom = () => {
         columnClassName="masonry-column"
       >
         {userTasks.map((cardValue, index) => (
-          <TasksCard key={index} cardValue={cardValue} />
+          <TasksCard
+            key={index}
+            cardValue={cardValue}
+            id={index}
+            deleteHandel={deleteHandel}
+          />
         ))}
       </Masonry>
     </div>

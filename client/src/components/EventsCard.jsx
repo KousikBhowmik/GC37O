@@ -9,7 +9,7 @@ import {
   format,
 } from "date-fns";
 
-const EventsCard = ({ cardValue }) => {
+const EventsCard = ({ cardValue, id, deleteHandel }) => {
   const [showDelete, setShowDelete] = useState(false);
   const [cardData, setCardData] = useState({});
 
@@ -54,19 +54,43 @@ const EventsCard = ({ cardValue }) => {
   }, [cardValue.eventTime]);
 
   return (
-    <div
-      onMouseLeave={() => setShowDelete(false)}
-      className="border border-gray-300 dark:border-gray-700 bg-gray-100 px-4 py-3 rounded-md flex flex-col gap-2 dark:bg-[#0a0a0a] mb-4"
-    >
+    <div className="border border-gray-300 dark:border-gray-700 bg-gray-100 px-4 py-3 rounded-md flex flex-col gap-2 dark:bg-[#0a0a0a] mb-4">
+      {showDelete && (
+        <div className="fixed left-0 top-0 right-0 bottom-0 z-20 backdrop-blur-sm bg-black/30 flex items-center justify-center  ">
+          <div className="flex flex-col p-6 gap-6  rounded-md justify-center items-center bg-white mx-2 sm:mx-0">
+            <p className="text-[16px] md:text-lg mt-2 ">
+              Are you sure you want to{" "}
+              <span className="font-semibold text-red-400">Delete</span>?
+            </p>
+            <div className="flex gap-6">
+              <button
+                onClick={() => setShowDelete(false)}
+                className="py-1 px-4 border border-black hover:bg-gray-100  rounded-sm cursor-pointer"
+              >
+                No
+              </button>
+              <button
+                onClick={() => {
+                  deleteHandel(id);
+                  setShowDelete(false);
+                }}
+                className="py-1 px-4 border border-red-500 hover:bg-gray-100 rounded-sm  text-red-500 cursor-pointer"
+              >
+                Yes
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <p className="   font-semibold dark:text-white">{cardData.heading}</p>
 
       <p className="text-sm text-slate-600 dark:text-slate-400 max-h-[1000px] overflow-auto">
         {cardData.description}
       </p>
       <div className="flex items-center justify-between text-sm ">
-          <p className="text-gray-500"> {cardData.eventDate}</p>
-          <p className="text-gray-500">{cardData.eventTime}</p>
-        
+        <p className="text-gray-500"> {cardData.eventDate}</p>
+        <p className="text-gray-500">{cardData.eventTime}</p>
       </div>
       <div className="flex items-center justify-between gap-4 ">
         <p className="text-sm text-purple-500">{cardData.timeLeft}</p>
@@ -74,30 +98,12 @@ const EventsCard = ({ cardValue }) => {
           <p className="px-2 cursor-pointer text-sm bg-gray-100 rounded-sm border border-gray-300 hover:bg-gray-300">
             Edit
           </p>
-          <div className="relative">
-            <p
-              onClick={() => setShowDelete(true)}
-              className="px-2 cursor-pointer text-sm text-red-400 rounded-sm hover:text-red-500 border "
-            >
-              Delete
-            </p>
-            {showDelete && (
-              <div className="absolute -bottom-1 right-0 z-10 w-[300px] rounded-md flex flex-col py-6 gap-4 items-center justify-center   bg-gray-200 border border-gray-300 ">
-                <p className="font-semibold">You want to delete this?</p>
-                <div className="flex gap-4">
-                  <button
-                    onClick={() => setShowDelete(false)}
-                    className="py-1 px-2  rounded-sm bg-white cursor-pointer"
-                  >
-                    Cancel
-                  </button>
-                  <button className="py-1 px-2 rounded-sm bg-white text-red-500 cursor-pointer">
-                    Delete
-                  </button>
-                </div>
-              </div>
-            )}
-          </div>
+          <p
+            onClick={() => setShowDelete(true)}
+            className="px-2 cursor-pointer text-sm text-red-400 rounded-sm hover:text-red-500 border "
+          >
+            Delete
+          </p>
         </div>
       </div>
     </div>

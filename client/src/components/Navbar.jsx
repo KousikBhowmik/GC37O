@@ -4,8 +4,10 @@ import { useDarkMode } from "../store/useStore.js";
 import { CgProfile } from "react-icons/cg";
 import { LuMoonStar } from "react-icons/lu";
 import { IoSunny } from "react-icons/io5";
+import { NavLink } from "react-router-dom";
+import "../style/navbar.css";
 
-const Navbar = ({ activeState, setActiveState }) => {
+const Navbar = () => {
   const [isProfileCard, setIsProfileCard] = useState(false);
   const { isDarkMode, toggleDarkMode } = useDarkMode();
   const navigate = useNavigate();
@@ -69,50 +71,44 @@ const Navbar = ({ activeState, setActiveState }) => {
         </div>
       </div>
       <div>
-        <ul className="flex text-gray-500 text-sm font-serif gap-2 ">
-          <li
-            onClick={() => {setActiveState("home")
-              navigate("/dashboard");
-            }}
-            className={`relative cursor-pointer py-1 px-4 hover:bg-gray-200 dark:hover:bg-[#ffffff20] dark:hover:text-white  hover:text-black rounded-sm 
-                after:absolute after:left-0 after:bottom-0 after:h-0.5 after:bg-black dark:after:bg-white 
-              after:transition-all after:duration-300  ${
-                activeState === "home"
+        <div className="flex text-gray-500 text-sm font-serif gap-2 ">
+          <NavLink
+            to={"/dashboard/home"}
+            className={({ isActive }) =>
+              `relative cursor-pointer py-1 px-4 rounded-sm transition hover:bg-gray-200 dark:hover:bg-[#ffffff20] hover:text-black dark:hover:text-white  after:absolute after:left-0 after:bottom-0 after:h-0.5 after:bg-black dark:after:bg-white ater:transition-al after:duration-300 ${
+                isActive
                   ? "after:w-full text-black dark:text-white"
                   : "after:w-0"
-              }`}
+              } hover:after:w-full`
+            }
           >
             Home
-          </li>
-          <li
-            onClick={() => {setActiveState("tasks")
-              navigate("/dashboard/tasks");
-            }}
-            className={`relative cursor-pointer py-1 px-4 hover:bg-gray-200 dark:hover:bg-[#ffffff20] dark:hover:text-white  hover:text-black rounded-sm 
-              after:absolute after:left-0 after:bottom-0 after:h-0.5 after:bg-black dark:after:bg-white 
-              after:transition-all after:duration-300 ${
-                activeState === "tasks"
+          </NavLink>
+          <NavLink
+            to={"/dashboard/tasks"}
+            className={({ isActive }) =>
+              `relative cursor-pointer py-1 px-4 rounded-sm transition hover:bg-gray-200 dark:hover:bg-[#ffffff20] hover:text-black dark:hover:text-white  after:absolute after:left-0 after:bottom-0 after:h-0.5 after:bg-black dark:after:bg-white ater:transition-al after:duration-300 ${
+                isActive
                   ? "after:w-full text-black dark:text-white"
                   : "after:w-0"
-              } `}
+              } hover:after:w-full`
+            }
           >
             Tasks
-          </li>
-          <li
-            onClick={() => {setActiveState("events")
-              navigate("/dashboard/events");
-            }}
-            className={`relative cursor-pointer py-1 px-4 hover:bg-gray-200 dark:hover:bg-[#ffffff20] dark:hover:text-white  hover:text-black rounded-sm 
-              after:absolute after:left-0 after:bottom-0 after:h-0.5 after:bg-black dark:after:bg-white 
-              after:transition-all after:duration-300 ${
-                activeState === "events"
+          </NavLink>
+          <NavLink
+            to={"/dashboard/events"}
+            className={({ isActive }) =>
+              `relative cursor-pointer py-1 px-4 rounded-sm transition hover:bg-gray-200 dark:hover:bg-[#ffffff20] hover:text-black dark:hover:text-white  after:absolute after:left-0 after:bottom-0 after:h-0.5 after:bg-black dark:after:bg-white ater:transition-al after:duration-300 ${
+                isActive
                   ? "after:w-full text-black dark:text-white"
                   : "after:w-0"
-              } `}
+              } hover:after:w-full`
+            }
           >
             Events
-          </li>
-        </ul>
+          </NavLink>
+        </div>
       </div>
     </div>
   );
