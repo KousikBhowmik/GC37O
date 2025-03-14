@@ -30,18 +30,18 @@ const userSchema = new mongoose.Schema(
       enum: ["active", "blocked", "deleted"],
       default: "active",
     },
-    // tasks: [
-    //   {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: "taskModel",
-    //   },
-    // ],
-    // events: [
-    //   {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: "eventModel",
-    //   },
-    // ],
+    tasks: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "TasksModel",
+      },
+    ],
+    events: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "EventsModel",
+      },
+    ],
   },
   {
     timestamps: true,

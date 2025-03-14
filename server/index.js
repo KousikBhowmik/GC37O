@@ -5,6 +5,8 @@ import dotenv from "dotenv";
 import admin from "firebase-admin";
 import connectDB from "./configs/mongoDB.js";
 import authRouter from "./routes/authRoutes.js";
+import taskRoutes from "./routes/taskRoutes.js";
+import eventRoutes from "./routes/eventsRoutes.js";
 
 dotenv.config();
 
@@ -56,6 +58,8 @@ app.get("/", (_, res) => {
   res.send("server is running on !");
 });
 app.use("/api/authentication", authRouter);
+app.use("/api/tasks", taskRoutes);
+app.use("/api/events", eventRoutes);
 
 // ----------------- Server starting ------------------
 
