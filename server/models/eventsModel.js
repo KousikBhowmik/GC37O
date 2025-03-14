@@ -3,8 +3,8 @@ import mongoose from "mongoose";
 const eventsSchema = new mongoose.Schema(
   {
     user: {
-      typeof: mongoose.Schema.Types.ObjectId,
-      ref: "UserModel",
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "users",
       required: [true, "User id is Required"],
     },
     heading: {
@@ -30,6 +30,6 @@ const eventsSchema = new mongoose.Schema(
 );
 
 const EventsModel =
-  mongoose.models.Events || mongoose.model("Events", eventsSchema);
+  mongoose.models.events || mongoose.model("events", eventsSchema);
 
 export default EventsModel;

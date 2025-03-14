@@ -33,13 +33,13 @@ const userSchema = new mongoose.Schema(
     tasks: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "TasksModel",
+        ref: "tasks",
       },
     ],
     events: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "EventsModel",
+        ref: "events",
       },
     ],
   },
@@ -48,6 +48,6 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-const UserModel = mongoose.models.Users || mongoose.model("Users", userSchema);
+const UserModel = mongoose.models.users || mongoose.model("users", userSchema);
 
 export default UserModel;

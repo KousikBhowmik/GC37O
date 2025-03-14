@@ -3,8 +3,8 @@ import mongoose from "mongoose";
 const tasksSchema = new mongoose.Schema(
   {
     user: {
-      typeof: mongoose.Schema.Types.ObjectId,
-      ref: "UserModel",
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "users",
       required: [true, "User id is Required"],
     },
     heading: {
@@ -35,6 +35,6 @@ const tasksSchema = new mongoose.Schema(
 );
 
 const TasksModel =
-  mongoose.models.Tasks || mongoose.model("Tasks", tasksSchema);
+  mongoose.models.tasks || mongoose.model("tasks", tasksSchema);
 
 export default TasksModel;
