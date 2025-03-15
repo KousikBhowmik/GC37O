@@ -5,10 +5,10 @@ import tokenVerification from "../middlewares/tokenVerification.js";
 
 const authRouter = Router();
 
-authRouter.post("/sendOtp", otpSendApi);
-authRouter.post("/verifyOtp", otpVerifyApi);
-authRouter.post("/loginUser", loginUser);
-authRouter.post("/loginWithGoogle", loginWithGoogle);
-authRouter.get("/getUser", tokenVerification, getUser);
+authRouter.post("/send-otp", otpSendApi);
+authRouter.post("/verify-otp", otpVerifyApi);
+authRouter.post("/login-user", loginUser);
+authRouter.post("/login-google", loginWithGoogle);
+authRouter.get("/get-user", tokenVerification, getUser);
 
 export default authRouter;

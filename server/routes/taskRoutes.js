@@ -3,16 +3,15 @@ import {
   createTaskApi,
   deleteTaskApi,
   getAllTasksApi,
-  statusUpdateApi,
   updateTaskApi,
 } from "../controllers/tasksController.js";
+import tokenVerification from "../middlewares/tokenVerification.js";
 
 const taskRoutes = Router();
 
-taskRoutes.get("/get-tasks", getAllTasksApi);
-taskRoutes.post("/add-task", createTaskApi);
-taskRoutes.post("/update-task", updateTaskApi);
-taskRoutes.post("/status-update", statusUpdateApi);
-taskRoutes.delete("/update-task", deleteTaskApi);
+taskRoutes.get("/get", tokenVerification, getAllTasksApi);
+taskRoutes.post("/add", tokenVerification,  createTaskApi);
+taskRoutes.put("/update/:taskId", updateTaskApi);
+taskRoutes.delete("/delete/:taskId", deleteTaskApi);
 
 export default taskRoutes;

@@ -1,44 +1,43 @@
 import UserModel from "../models/userModel.js";
 import TasksModel from "../models/tasksModel.js";
-import mongoose from "mongoose";
 
+// --------------------- API to get all tasks ----------------------
 
 export const getAllTasksApi = async (req, res) => {
-    try {
-        const { userId } = req.params;
+  try {
+    const { userId } = req;
 
-        if (!userId) {
-            return res.status(400).json({ success: false, message: 'User ID is required' });
-        }
-
-        const user = await UserModel.aggregate([
-            { $match: { _id: new mongoose.Types.ObjectId(userId) } },
-            {
-                $lookup: {
-                    from: 'tasks',
-                    localField: 'tasks',
-                    foreignField: '_id',
-                    as: 'tasks'
-                }
-            }
-        ]);
-
-        if (!user.length) {
-            return res.status(404).json({ message: 'User not found or no tasks found' });
-        }
-
-        res.status(200).json({ success: true, tasks: user[0].tasks });
-    } catch (error) {
-        res.status(500).json({ message: 'Server Error', error });
+    if (!userId) {
+      return res
+        .status(400)
+        .json({ success: false, message: "User ID is required" });
     }
+
+    const user = await UserModel.findById(userId).populate("tasks");
+
+    if (!user) {
+      return res
+        .status(404)
+        .json({ message: "User not found or no tasks found" });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Fetched tasks successfully",
+      tasks: user.tasks,
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Server Error", error });
+  }
 };
 
+// --------------------- API to add single task ----------------------
 
 export const createTaskApi = async (req, res) => {
   const { userId } = req;
   const { heading, description, startTime, endTime } = req.body;
 
-  if (!userId && !heading && !description && !startTime && !endTime)
+  if (!userId || !heading || !description || !startTime || !endTime)
     return res
       .status(400)
       .json({ success: false, message: "All fields are required" });
@@ -64,26 +63,18 @@ export const createTaskApi = async (req, res) => {
     if (!task)
       return res
         .status(400)
-        .json({ success: false, message: "Failed to create user" });
+        .json({ success: false, message: "Failed to create tasl" });
 
-    user = await UserModel.aggregate([
-      { $match: { _id: new mongoose.Types.ObjectId(userId) } },
-      // @ts-ignore
+    user = await UserModel.findByIdAndUpdate(
+      userId,
       { $push: { tasks: task._id } },
-      {
-        $lookup: {
-          from: "tasks",
-          localField: "tasks",
-          foreignField: "_id",
-          as: "tasks",
-        },
-      },
-    ]);
+      { new: true }
+    ).populate("tasks");
 
     res.status(201).json({
       success: true,
       message: "Task created successfully",
-      tasks: user[0].tasks,
+      tasks: user.tasks,
     });
   } catch (error) {
     console.log(error);
@@ -95,11 +86,13 @@ export const createTaskApi = async (req, res) => {
   }
 };
 
+// --------------------- API to update task fields/field ----------------------
+
 export const updateTaskApi = async (req, res) => {
   const { taskId } = req.params;
   const updateFields = req.body;
 
-  if (!taskId && !updateFields)
+  if (!taskId || !updateFields)
     return res
       .status(400)
       .json({ success: false, message: "All fields are required" });
@@ -121,48 +114,17 @@ export const updateTaskApi = async (req, res) => {
   }
 };
 
-export const statusUpdateApi = async (req, res) => {
-  const { taskId } = req.params;
-  const { status } = req.body;
-  if (!taskId && !status)
-    return res
-      .status(400)
-      .json({ success: false, message: "All fields are required" });
 
-  try {
-    const validStatuses = ["todo", "progress", "pending", "completed"];
-
-    if (!validStatuses.includes(status)) {
-      return res.status(400).json({ message: "Invalid status value" });
-    }
-
-    const updatedTask = await TasksModel.findByIdAndUpdate(
-      taskId,
-      { $set: { status } },
-      { new: true }
-    );
-
-    if (!updatedTask) {
-      return res.status(404).json({ message: "Task not found" });
-    }
-
-    res
-      .status(200)
-      .json({ message: "Task status updated successfully", updatedTask });
-  } catch (error) {
-    res.status(500).json({ message: "Server Error", error });
-  }
-};
+// --------------------- API to delete single task ----------------------
 
 export const deleteTaskApi = async (req, res) => {
-    const { taskId } = req.params;
-if (!taskId )
-  return res
-    .status(400)
-    .json({ success: false, message: "Task Id is Required" });
+  const { taskId } = req.params;
+  if (!taskId)
+    return res
+      .status(400)
+      .json({ success: false, message: "Task Id is Required" });
 
   try {
-
     const deletedTask = await TasksModel.findByIdAndDelete(taskId);
     if (!deletedTask) {
       return res.status(404).json({ message: "Task not found" });
