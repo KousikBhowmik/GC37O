@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { motion } from "framer-motion";
 import { ScrollText, Zap, AlarmClockMinus, CircleCheckBig } from "lucide-react";
+import { useTaskPageState } from "../store/useStore.js";
 
 const ProgressCom = () => {
   const [toggleText, setToggleText] = useState("tasks");
+  const { setAddPageState } = useTaskPageState();
   useEffect(() => {
     const interval = setInterval(() => {
       setToggleText(toggleText === "tasks" ? "events" : "tasks");
@@ -13,9 +15,9 @@ const ProgressCom = () => {
   }, [toggleText]);
 
   return (
-    <div className=" w-full h-[500px] grid grid-rows-5 gap-4 pr-3">
+    <div className=" w-full h-[500px] items-center grid grid-rows-5 gap-4 pr-3">
       <div className="w-full row-span-2 bg-gray-200 dark:bg-[#0a0a0a] h-[100%] flex flex-col border border-white dark:border-gray-700 items-center justify-center gap-2 rounded-md   ">
-        <IoMdAddCircleOutline className="text-6xl text-gray-400 cursor-pointer" />
+        <IoMdAddCircleOutline className="text-6xl text-gray-400 cursor-pointer" onClick={() => setAddPageState(true)}/>
         <div className="grid grid-cols-5">
           <span className="text-2xl col-span-3 font-serif dark:text-gray-200 ">
             Add a new

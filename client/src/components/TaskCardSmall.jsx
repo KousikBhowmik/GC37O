@@ -10,12 +10,14 @@ import {
 } from "date-fns";
 import { BsThreeDotsVertical } from "react-icons/bs";
 
-const TaskCardSmall = ({ cardValue }) => {
+const TaskCardSmall = ({ cardValue, id, deleteHandel }) => {
   const [cardData, setCardData] = useState(cardValue);
   const [showEidt, setShowEdit] = useState(false);
   const [showStatus, setShowStatus] = useState(false);
+  const [showDelete, setShowDelete] = useState(false);
 
   useEffect(() => {
+    
     const tempTime = {
       year: getYear(cardData.endTime).toString().slice(2),
       month: (getMonth(cardData.endTime) + 1).toString().padStart(2, "0"),
@@ -30,8 +32,41 @@ const TaskCardSmall = ({ cardValue }) => {
     setCardData({ ...cardData, date: date, time: time });
   }, [cardValue]);
 
-  return (
-    <div onMouseLeave={() => setShowEdit(false)} className=" flex flex-col w-full bg-white cursor-pointer p-2  rounded-md  transition duration-200 hover:scale-105 ">
+  return showDelete ? (
+    <div className="fixed  left-0 top-0 right-0 bottom-0 z-20 backdrop-blur-sm text-black bg-black/30 flex items-center justify-center  ">
+      <div className="flex flex-col p-6 gap-6  rounded-md justify-center items-center bg-white mx-2 sm:mx-0">
+        <p className="text-[16px] md:text-lg mt-2 ">
+          Are you sure you want to{" "}
+          <span className="font-semibold text-red-400">Delete</span>?
+        </p>
+        <div className="flex gap-6">
+          <button
+            onClick={() => {
+              setShowEdit(false);
+              setShowDelete(false);
+            }}
+            className="py-1 px-4 border border-black hover:bg-gray-100  rounded-sm cursor-pointer"
+          >
+            No
+          </button>
+          <button
+            onClick={() => {
+              deleteHandel(id);
+              setShowDelete(false);
+              setShowEdit(false);
+            }}
+            className="py-1 px-4 border border-red-500 hover:bg-gray-100 rounded-sm  text-red-500 cursor-pointer"
+          >
+            Yes
+          </button>
+        </div>
+      </div>
+    </div>
+  ) : (
+    <div
+      onMouseLeave={() => setShowEdit(false)}
+      className=" flex flex-col w-full bg-white cursor-pointer p-2  rounded-md  transition duration-200 hover:scale-105 "
+    >
       <div className="flex items-center justify-between">
         <p className="text-black">{cardData.heading}</p>
         <div className="relative">
@@ -55,7 +90,10 @@ const TaskCardSmall = ({ cardValue }) => {
               <p className=" text-gray-500 pl-1 text-sm   hover:text-black">
                 Edit task
               </p>
-              <p className=" text-red-400 pl-1 text-sm   hover:text-red-500">
+              <p
+                onClick={() => setShowDelete(true)}
+                className=" text-red-400 pl-1 text-sm   hover:text-red-500"
+              >
                 Delete
               </p>
             </div>

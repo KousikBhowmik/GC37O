@@ -83,6 +83,13 @@ input[type="number"]::-webkit-outer-spin-button {
   margin: 0;
 }
 
+
+textarea {
+  resize: none;
+  height: 80px; /* Approximately 3 lines */
+  overflow: hidden;
+}
+
 /* Remove arrows for Firefox */
 /* input[type="number"] {
   -moz-appearance: textfield;

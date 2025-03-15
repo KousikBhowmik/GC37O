@@ -6,94 +6,6 @@ import TasksCard from "./TasksCard.jsx";
 const TasksCom = () => {
   const { userTasks, setUserTasks } = useTasks();
 
-  const tempTasks = [
-    {
-      heading: "Finish the assignment before the deadline.",
-      description:
-        "Complete the website's frontend design, ensuring responsiveness across all devices, optimize performance, and test functionality before finalizing deployment next week..",
-      startTime: new Date(2025, 2, 10, 9, 0),
-      endTime: new Date(2025, 2, 10, 10, 0),
-      status: "todo",
-    },
-    {
-      heading: "Task 2",
-      description: "Description for task 2",
-      startTime: new Date(2025, 2, 10, 10, 15),
-      endTime: new Date(2025, 2, 10, 11, 0),
-      status: "progress",
-    },
-    {
-      heading: "Task 3",
-      description: "Description for task 3",
-      startTime: new Date(2025, 2, 10, 11, 30),
-      endTime: new Date(2025, 2, 10, 12, 15),
-      status: "pending",
-    },
-    {
-      heading: "Task 4",
-      description: "Description for task 4",
-      startTime: new Date(2025, 2, 10, 13, 0),
-      endTime: new Date(2025, 2, 10, 14, 0),
-      status: "completed",
-    },
-    {
-      heading: "Task 5",
-      description: "Description for task 5",
-      startTime: new Date(2025, 2, 10, 14, 30),
-      endTime: new Date(2025, 2, 10, 15, 30),
-      status: "todo",
-    },
-    {
-      heading: "Task 6",
-      description: "Description for task 6",
-      startTime: new Date(2025, 2, 10, 16, 0),
-      endTime: new Date(2025, 2, 10, 17, 0),
-      status: "progress",
-    },
-    {
-      heading: "Task 7",
-      description: "Description for task 7",
-      startTime: new Date(2025, 2, 11, 9, 0),
-      endTime: new Date(2025, 2, 11, 10, 0),
-      status: "pending",
-    },
-    {
-      heading: "Task 8",
-      description: "Description for task 8",
-      startTime: new Date(2025, 2, 11, 10, 30),
-      endTime: new Date(2025, 2, 11, 11, 30),
-      status: "completed",
-    },
-    {
-      heading: "Task 9",
-      description: "Description for task 9",
-      startTime: new Date(2025, 2, 11, 12, 0),
-      endTime: new Date(2025, 2, 11, 13, 0),
-      status: "todo",
-    },
-    {
-      heading: "Task 10",
-      description: "Description for task 10",
-      startTime: new Date(2025, 2, 11, 14, 0),
-      endTime: new Date(2025, 2, 11, 15, 0),
-      status: "progress",
-    },
-    {
-      heading: "Task 11",
-      description: "Description for task 11",
-      startTime: new Date(2025, 2, 11, 16, 0),
-      endTime: new Date(2025, 2, 11, 17, 0),
-      status: "pending",
-    },
-    {
-      heading: "Task 12",
-      description: "Description for task 12",
-      startTime: new Date(2025, 2, 11, 18, 0),
-      endTime: new Date(2025, 2, 11, 19, 0),
-      status: "completed",
-    },
-  ];
-
   const breakpointColumns = {
     default: 4,
     1100: 3,
@@ -101,9 +13,6 @@ const TasksCom = () => {
     500: 1,
   };
 
-  useEffect(() => {
-    setUserTasks(tempTasks);
-  }, []);
 
   const deleteHandel = (index) => {
     setUserTasks(userTasks.filter((_, i) => i != index));
