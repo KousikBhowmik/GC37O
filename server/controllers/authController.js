@@ -278,6 +278,9 @@ export const deleteUser = async (req, res) => {
 export const updateUserApi = async (req, res) => {
   const { userId } = req;
   const updateFields = req.body;
+  if (req.file) {
+    updateFields.profileImage = req.file.path;
+  }
 
   if (!userId || !updateFields || Object.keys(updateFields).length === 0) {
     return res.status(400).json({
