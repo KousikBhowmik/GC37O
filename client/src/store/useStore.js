@@ -23,8 +23,14 @@ export const useEvents = create((set) => ({
 }));
 
 export const useTaskPageState = create((set) => ({
-  addPageState: true,
+  addPageState: false,
   setAddPageState: (value) => set(() => ({ addPageState: value })),
+}));
+
+export const useAccountSettingsPage = create((set) => ({
+  isAccountSettingsPage: false,
+  setIsAccountSettingsPage: (value) =>
+    set(() => ({ isAccountSettingsPage: value })),
 }));
 
 export const useSettingPage = create((set) => ({

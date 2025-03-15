@@ -5,11 +5,14 @@ import { CgProfile } from "react-icons/cg";
 import { LuMoonStar } from "react-icons/lu";
 import { IoSunny } from "react-icons/io5";
 import { NavLink } from "react-router-dom";
+import { useAccountSettingsPage } from "../store/useStore.js";
 import "../style/navbar.css";
 
 const Navbar = () => {
   const [isProfileCard, setIsProfileCard] = useState(false);
   const { isDarkMode, toggleDarkMode } = useDarkMode();
+  const {  setIsAccountSettingsPage } =
+      useAccountSettingsPage();
   const navigate = useNavigate();
 
   return (
@@ -39,7 +42,10 @@ const Navbar = () => {
                   kousikbhowmik888@gamil.com
                 </p>
               </div>
-              <p className="pl-2 cursor-pointer text-gray-600 dark:text-gray-400 hover:bg-gray-100 py-2 rounded-md hover:text-black dark:hover:bg-[#4545455b] dark:hover:text-white ">
+              <p onClick={() => {
+                setIsProfileCard(false)
+                setIsAccountSettingsPage(true)
+              }} className="pl-2 cursor-pointer text-gray-600 dark:text-gray-400 hover:bg-gray-100 py-2 rounded-md hover:text-black dark:hover:bg-[#4545455b] dark:hover:text-white ">
                 Account Settings
               </p>
               <div

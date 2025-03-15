@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DatePickerCom from "../components/DatePickerCom";
 import TimePickerCom from "../components/TimePickerCom";
 import {
@@ -39,17 +39,26 @@ const AddTasksEvents = () => {
         }
   );
 
+
+    useEffect(() => {
+      document.body.style.overflow = "hidden";
+  
+      return () => {
+        document.body.style.overflow = "unset";
+      };
+    }, []);
+
   return (
     <div className="fixed left-0 top-0 right-0 bottom-0 z-20 backdrop-blur-sm bg-black/30 flex items-center justify-center">
       <div className="w-[90%]  relative  lg:w-[60%] h-[75vh]  xl:h-[70vh]  bg-white dark:bg-[#0a0a0a] rounded-xl flex   justify-center dark:border  dark:border-gray-900 gap-4">
         <IoCloseOutline className="absolute top-4 dark:text-white right-4 text-xl cursor-pointer" onClick={() => setAddPageState(false)} />
-        <div className="w-[85%] lg:w-[50%] flex flex-col gap-4  justify-center  ">
+        <div className="w-[85%] lg:w-[50%] flex flex-col gap-4    ">
           {/* ----------------- Heading ------------------- */}
-          <div className="flex items-center justify-center gap-2  ">
-            <h1 className="text-3xl  md:text-4xl dark:text-white  my-4  md:my-6 ">
+          <div className="flex items-center justify-center gap-2 mt-2 ">
+            <h1 className="text-3xl  md:text-5xl dark:text-white  my-4  md:my-6 ">
               Add
             </h1>
-            <div className="flex gap-2 text-3xl md:text-4xl text-black dark:text-white ">
+            <div className="flex gap-2 text-3xl md:text-5xl text-black dark:text-white ">
               <p className="  p-1 rounded-md transition-all duration-300 ease-in-out bg-transparent">
                 {type === "task" ? "Task" : "Event"}
               </p>
@@ -107,7 +116,7 @@ const AddTasksEvents = () => {
           ></textarea>
 
           <button className=" py-1 rounded-sm border-none bg-black dark:bg-white text-gray-100 dark:text-black font-semibold cursor-pointer ">
-            Submit
+            {type === "task"? "Add task" : "Add Event"}
           </button>
         </div>
       </div>
