@@ -1,5 +1,4 @@
 // @ts-nocheck
-
 // --------------------- Server URL or Base URL ----------------------
 
 export const serverURL = import.meta.env.VITE_SERVER_URL;
@@ -7,6 +6,7 @@ export const serverURL = import.meta.env.VITE_SERVER_URL;
 // ------------------- Auth Routes -----------------------
 
 export const authRoute = "/api/authentication";
+export const emailExistRoute = `${authRoute}/email-exist`;
 export const otpSendRoute = `${authRoute}/send-otp`;
 export const otpVerifyRoute = `${authRoute}/verify-otp`;
 export const singUpRoute = `${authRoute}/login-user`;

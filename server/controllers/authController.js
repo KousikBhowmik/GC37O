@@ -1,4 +1,6 @@
 import UserModel from "../models/userModel.js";
+import TasksModel from "../models/tasksModel.js";
+import EventsModel from "../models/eventsModel.js";
 import { hash } from "bcryptjs";
 import admin from "firebase-admin";
 import { cookieObj } from "../utils/constants.js";
@@ -10,6 +12,34 @@ import {
 import dotenv from "dotenv";
 
 dotenv.config();
+
+//  -------------------------- Api to check email exist or not --------------------------
+
+export const emailExist = async (req, res) => {
+  const { email } = req.query;
+
+  if (!email) {
+    return res
+      .status(400)
+      .json({ success: false, message: "Email is required" });
+  }
+
+  try {
+    const isEmail = await UserModel.exists({ email });
+
+    res.status(200).json({
+      success: !!isEmail,
+      message: isEmail ? "Email already exists" : "Email doesn't exist",
+    });
+  } catch (error) {
+    console.error("Error checking email:", error);
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+      error: error.message,
+    });
+  }
+};
 
 // ------------------------- API for Register USER with email/pass --------------------------
 export const loginUser = async (req, res) => {
@@ -145,6 +175,7 @@ export const getUser = async (req, res) => {
       message: "user logged in successfully",
       user: {
         name: user.name,
+        email: user.email,
         profilePic: user.profilePic,
       },
     });
@@ -153,6 +184,131 @@ export const getUser = async (req, res) => {
     res.status(500).json({
       success: false,
       message: "unable to get your data",
+      error: error.message,
+    });
+  }
+};
+
+// ------------------------------ Api for reset password ------------------------------
+
+export const resetPasswordApi = async (req, res) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res
+      .status(400)
+      .json({ success: false, message: "Email and password are required" });
+  }
+
+  try {
+    const hashedPassword = await hashPasswordFUn(password);
+
+    const passUpdate = await UserModel.findOneAndUpdate(
+      { email },
+      { $set: { password: hashedPassword } },
+      { new: true }
+    );
+
+    if (!passUpdate) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found or unable to update password",
+      });
+    }
+
+    res
+      .status(200)
+      .json({ success: true, message: "Password updated successfully" });
+  } catch (error) {
+    console.error("Error updating password:", error);
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+      error: error.message,
+    });
+  }
+};
+
+//  ------------------------- Delete user Api ----------------------------
+
+export const deleteUser = async (req, res) => {
+  const userId = req.userId;
+
+  if (!userId) {
+    return res
+      .status(400)
+      .json({ success: false, message: "User ID is required" });
+  }
+
+  try {
+    // Find the user first
+    const user = await UserModel.findById(userId);
+    if (!user) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
+    }
+
+    const delTasks = await TasksModel.deleteMany({ user: userId });
+    const delEvents = await EventsModel.deleteMany({ user: userId });
+
+    const delUser = await UserModel.findByIdAndDelete(userId);
+
+    if (!delTasks || !delEvents || !delUser)
+      return res
+        .status(400)
+        .json({ success: false, message: "Unable to delete user" });
+
+    res.status(200).json({
+      success: true,
+      message: "User and related data deleted successfully",
+    });
+  } catch (error) {
+    console.error("Error deleting user:", error);
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+      error: error.message,
+    });
+  }
+};
+
+//  --------------------------- update user Api ---------------------------
+
+export const updateUserApi = async (req, res) => {
+  const { userId } = req;
+  const updateFields = req.body;
+
+  if (!userId || !updateFields || Object.keys(updateFields).length === 0) {
+    return res.status(400).json({
+      success: false,
+      message: "User ID and update fields are required",
+    });
+  }
+
+  try {
+    const updatedUser = await UserModel.findByIdAndUpdate(
+      userId,
+      { $set: updateFields },
+      { new: true, runValidators: true }
+    ).select("-password");
+
+    if (!updatedUser) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "User updated successfully",
+      user: updatedUser,
+    });
+  } catch (error) {
+    console.error("Error updating user:", error);
+    res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
       error: error.message,
     });
   }
