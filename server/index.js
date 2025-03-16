@@ -59,7 +59,7 @@ app.get("/", (_, res) => {
 });
 app.use("/api/authentication", authRouter);
 app.use("/api/tasks", taskRoutes);
-app.use("/api/events", eventRoutes);
+app.use("/api/events", eventRoutes); 
 
 // ----------------- Server starting ------------------
 

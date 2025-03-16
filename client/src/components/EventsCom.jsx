@@ -2,10 +2,14 @@ import React, { useEffect } from "react";
 import Masonry from "react-masonry-css";
 import { useEvents } from "../store/useStore";
 import EventsCard from "./EventsCard";
+import { useTaskPageState, useFormType } from "../store/useStore.js";
+import { IoMdAddCircleOutline } from "react-icons/io";
 
 const EventsCom = () => {
   const { userEvents, setUserEvents } = useEvents();
-  
+  const { setAddPageState } = useTaskPageState();
+  const { setFormType} = useFormType();
+
   const breakpointColumns = {
     default: 4,
     1100: 3,
@@ -25,6 +29,20 @@ const EventsCom = () => {
         className="flex gap-4  "
         columnClassName="masonry-column"
       >
+        <div className="w-full  bg-gray-200 dark:bg-[#0a0a0a] mb-4 py-6 flex flex-col border border-white dark:border-gray-700 items-center justify-center gap-2 rounded-md   ">
+          <IoMdAddCircleOutline
+            className="text-6xl text-gray-400 cursor-pointer"
+            onClick={() => {
+              setFormType("event");
+              setAddPageState(true);
+            }}
+          />
+          <div className="flex items-center justify-center">
+            <span className="text-2xl col-span-3 font-serif dark:text-gray-200 ">
+              Add a new Event
+            </span>
+          </div>
+        </div>
         {userEvents.map((cardValue, index) => (
           <EventsCard
             key={index}

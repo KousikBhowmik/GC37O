@@ -47,3 +47,8 @@ export const useEventState = create((set) => ({
   eventEdit: {},
   setEventEdit: (value) => set(() => ({ taskEdit: value })),
 }));
+
+export const useFormType = create((set) => ({
+  formType: "task",
+  setFormType: (value) => set(() => ({ formType: value })),
+}));

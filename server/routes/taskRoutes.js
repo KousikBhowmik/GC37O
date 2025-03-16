@@ -12,6 +12,6 @@ const taskRoutes = Router();
 taskRoutes.get("/get", tokenVerification, getAllTasksApi);
 taskRoutes.post("/add", tokenVerification,  createTaskApi);
 taskRoutes.put("/update/:taskId", updateTaskApi);
-taskRoutes.delete("/delete/:taskId", deleteTaskApi);
+taskRoutes.delete("/delete/:taskId", deleteTaskApi); 
 
 export default taskRoutes;

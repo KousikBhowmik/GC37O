@@ -17,7 +17,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 
-const DatePickerCom = ({ selectedDate, setSelectedDate }) => {
+const DatePickerCom = ({ selectedDate, setSelectedDate, type }) => {
   const today = startOfDay(new Date());
   const [currentMonth, setCurrentMonth] = useState(today);
   const [isOpen, setIsOpen] = useState(false);
@@ -48,6 +48,7 @@ const DatePickerCom = ({ selectedDate, setSelectedDate }) => {
         onClick={() => setIsOpen(!isOpen)}
         className=" flex items-center text-center gap-2.5 border border-gray-300 dark:border-gray-800 px-4 py-2 rounded-md shadow-sm bg-white dark:bg-black text-gray-800 dark:text-white"
       >
+        <p className={`${type === "event" ? "" : type === "to"? "px-2.5" : ""}`}>{type === "to"? "To": type=== "task"? "From" : ""}</p>
         <CalendarIcon className="w-5 h-5" />
         <p className="text-center"> {format(selectedDate, `dd`)}</p>
         <p className="text-center"> {format(selectedDate, `MMM `)}</p>

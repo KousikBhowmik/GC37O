@@ -44,9 +44,9 @@ const App = () => {
           <Route
             path="/dashboard"
             element={
-              // <LoginValid>
-              // </LoginValid>
+              <LoginValid>
                 <Dashboard />
+              </LoginValid>
             }
           >
             <Route index element={<Navigate to="home" replace />} />
