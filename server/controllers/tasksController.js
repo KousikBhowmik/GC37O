@@ -54,8 +54,8 @@ export const createTaskApi = async (req, res) => {
       user: user._id,
       heading: heading,
       description: description,
-      startTime: startTime,
-      endTime: endTime,
+      startTime: new Date(startTime),
+      endTime: new Date(endTime),
     };
 
     const task = await TasksModel.create(taskObj);
@@ -105,15 +105,20 @@ export const updateTaskApi = async (req, res) => {
     );
 
     if (!updatedTask) {
-      return res.status(404).json({ message: "Task not found" });
+      return res
+        .status(404)
+        .json({ success: false, message: "Task not found" });
     }
 
-    res.status(200).json({ message: "Task updated successfully", updatedTask });
+    res.status(200).json({
+      success: true,
+      message: "Task updated successfully",
+      task: updatedTask,
+    });
   } catch (error) {
-    res.status(500).json({ message: "Server Error", error });
+    res.status(500).json({ success: false, message: "Server Error", error });
   }
 };
-
 
 // --------------------- API to delete single task ----------------------
 
@@ -127,15 +132,19 @@ export const deleteTaskApi = async (req, res) => {
   try {
     const deletedTask = await TasksModel.findByIdAndDelete(taskId);
     if (!deletedTask) {
-      return res.status(404).json({ message: "Task not found" });
+      return res
+        .status(404)
+        .json({ success: false, message: "Task not found" });
     }
 
     await UserModel.findByIdAndUpdate(deletedTask.user, {
       $pull: { tasks: taskId },
     });
 
-    res.status(200).json({ message: "Task deleted successfully" });
+    res
+      .status(200)
+      .json({ success: true, message: "Task deleted successfully" });
   } catch (error) {
-    res.status(500).json({ message: "Server Error", error });
+    res.status(500).json({ success: false, message: "Server Error", error });
   }
 };

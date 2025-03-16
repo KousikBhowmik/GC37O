@@ -13,7 +13,7 @@ export const passwrodCheck = (password) => {
   const result = passwordRegex.test(password);
   if (!result) {
     toast.error("Enter a storng Password");
-    if(password.length < 6) toast.info("Password min length 6");
+    if (password.length < 6) toast.info("Password min length 6");
   }
   return result;
 };
@@ -23,4 +23,31 @@ export const otpCheck = (otp) => {
   const result = otpRegex.test(otp);
   if (!result) toast.error("Enter 6 digit OTP");
   return result;
+};
+
+export const toTimeObject = (dateObj, timeObj) => {
+  let date = new Date(dateObj); 
+
+  let hours =
+    timeObj.period === "PM" ? (timeObj.hours % 12) + 12 : timeObj.hours % 12;
+  let minutes = timeObj.minutes;
+
+  date.setHours(hours, minutes, 0, 0); 
+  return date;
+};
+
+
+export const fromTimeObject = (dateObj) => {
+  const dateString = dateObj.toDateString(); 
+
+  let hours = dateObj.getHours();
+  let minutes = dateObj.getMinutes();
+  let period = hours >= 12 ? "PM" : "AM";
+
+  hours = hours % 12 || 12; 
+  
+  return {
+    dateObj: { dateString },
+    timeObj: { hours, minutes, period },
+  };
 };

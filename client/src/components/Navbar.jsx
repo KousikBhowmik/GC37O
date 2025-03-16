@@ -1,21 +1,30 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDarkMode, userLoggedUser } from "../store/useStore.js";
+import Cookies from "js-cookie";
+import {
+  useDarkMode,
+  userLoggedUser,
+  useFeedbackPage,
+} from "../store/useStore.js";
 import { CgProfile } from "react-icons/cg";
 import { LuMoonStar } from "react-icons/lu";
 import { IoSunny } from "react-icons/io5";
 import { NavLink } from "react-router-dom";
-import { useAccountSettingsPage } from "../store/useStore.js";
 import { IoCloseOutline } from "react-icons/io5";
 import "../style/navbar.css";
 
 const Navbar = () => {
   const [isProfileCard, setIsProfileCard] = useState(false);
   const { isDarkMode, toggleDarkMode } = useDarkMode();
-  const { loggedUser } = userLoggedUser();
+  const { loggedUser, setLoggedUser } = userLoggedUser();
   const profilePic = loggedUser?.profilePic || "";
-  const { setIsAccountSettingsPage } = useAccountSettingsPage();
   const navigate = useNavigate();
+  const { setFeedbackPageState } = useFeedbackPage();
+
+  const logOutFun = () => {
+    Cookies.remove("user-token");
+    setLoggedUser("");
+  };
 
   return (
     <div className="w-full border flex flex-col gap-2  border-b-gray-300 dark:border-b-gray-700 px-[3vw] pt-2 pb-1 dark:bg-[#0a0a0a] ">
@@ -54,9 +63,12 @@ const Navbar = () => {
                   <p className="text-xs text-gray-600 dark:text-gray-300">
                     {loggedUser.email}
                   </p>
-                  <IoCloseOutline onClick={() => setIsProfileCard(false)} className="absolute right-0 cursor-pointer text-xl"/>
+                  <IoCloseOutline
+                    onClick={() => setIsProfileCard(false)}
+                    className="absolute right-0 cursor-pointer text-xl"
+                  />
                 </div>
-                <p
+                {/* <p
                   onClick={() => {
                     setIsProfileCard(false);
                     setIsAccountSettingsPage(true);
@@ -64,6 +76,12 @@ const Navbar = () => {
                   className="pl-2 cursor-pointer text-gray-600 dark:text-gray-400 hover:bg-gray-100 py-2 rounded-md hover:text-black dark:hover:bg-[#4545455b] dark:hover:text-white "
                 >
                   Account Settings
+                </p> */}
+                <p
+                  onClick={() => setFeedbackPageState(true)}
+                  className="pl-2 md:hidden flex cursor-pointer text-gray-600 dark:text-gray-400 hover:bg-gray-100 py-2 rounded-md hover:text-black dark:hover:bg-[#4545455b] dark:hover:text-white "
+                >
+                  Feedback
                 </p>
                 <div
                   onClick={() => {
@@ -83,13 +101,19 @@ const Navbar = () => {
                     )}
                   </div>
                 </div>
-                <p className="pl-2 cursor-pointer text-red-500 dark:text-red-400 hover:bg-gray-100 py-2 rounded-md hover:text-red-500 dark:hover:bg-[#4545455b]  ">
+                <p
+                  onClick={logOutFun}
+                  className="pl-2 cursor-pointer text-red-500 dark:text-red-400 hover:bg-gray-100 py-2 rounded-md hover:text-red-500 dark:hover:bg-[#4545455b]  "
+                >
                   Log Out
                 </p>
               </div>
             )}
           </div>
-          <button className=" cursor-pointer border-1 border-gray-300 dark:border-gray-500 rounded-sm dark:text-white px-3 lg:px-4 py-1  hidden md:flex hover:bg-gray-100 dark:hover:bg-[#0a0a0a]  font-semibold ">
+          <button
+            onClick={() => setFeedbackPageState(true)}
+            className=" cursor-pointer border-1 border-gray-300 dark:border-gray-500 rounded-sm dark:text-white px-3 lg:px-4 py-1  hidden md:flex hover:bg-gray-100 dark:hover:bg-[#0a0a0a]  font-semibold "
+          >
             Feedback
           </button>
         </div>

@@ -73,18 +73,19 @@ export const loginUser = async (req, res) => {
       });
       isUserExist = user ? true : false;
     }
-
+    console.log("three");
     if (user && isUserExist) {
       const token = createTokenFun(user._id);
 
       res.cookie("user-token", token, cookieObj);
-
+      console.log("four");
       res.status(200).json({
         success: true,
         message: "user logged in successfully",
         user: {
           name: user.name,
           profilePic: user.profilePic,
+          email: user.email,
         },
       });
     } else
@@ -117,6 +118,11 @@ export const loginWithGoogle = async (req, res) => {
     const { uid, name, email, picture } = decodeToken;
 
     let user = await UserModel.findOne({ email });
+
+    if (user?.passwordType === "custom")
+      return res
+        .status(400)
+        .json({ success: false, message: "Login with email and password" });
 
     if (!user) {
       const hashPassword = await hashPasswordFUn(uid);

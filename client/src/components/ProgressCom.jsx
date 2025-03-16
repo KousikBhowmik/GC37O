@@ -16,16 +16,20 @@ const ProgressCom = () => {
   }, [toggleText]);
 
   return (
-    <div className=" w-full h-[500px] items-center grid grid-rows-5 gap-4 pr-3">
+    <div className=" w-full h-[500px] items-center grid sm:mb-5 lg:mb-0 grid-rows-5 gap-4 pr-3 ">
       <div className="w-full row-span-2 bg-gray-200 dark:bg-[#0a0a0a] h-[100%] flex flex-col border border-white dark:border-gray-700 items-center justify-center gap-2 rounded-md   ">
-        <IoMdAddCircleOutline className="text-6xl text-gray-400 cursor-pointer" onClick={() => {
-          setFormType(toggleText === "tasks"? "task": "event")
-          setAddPageState(true)}}/>
+        <IoMdAddCircleOutline
+          className="text-6xl text-gray-400 cursor-pointer"
+          onClick={() => {
+            setFormType(toggleText === "tasks" ? "task" : "event");
+            setAddPageState(true);
+          }}
+        />
         <div className="grid grid-cols-5">
           <span className="text-2xl col-span-3 font-serif dark:text-gray-200 ">
             Add a new
           </span>
-          <motion.span 
+          <motion.span
             key={toggleText}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}

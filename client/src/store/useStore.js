@@ -1,5 +1,4 @@
 import { create } from "zustand";
-import { tempEvent, tempTasks } from "./tempData.js";
 
 export const userLoggedUser = create((set) => ({
   loggedUser: "",
@@ -13,12 +12,12 @@ export const useDarkMode = create((set) => ({
 }));
 
 export const useTasks = create((set) => ({
-  userTasks: tempTasks || [],
+  userTasks: [],
   setUserTasks: (value) => set(() => ({ userTasks: value })),
 }));
 
 export const useEvents = create((set) => ({
-  userEvents: tempEvent || [],
+  userEvents: [],
   setUserEvents: (value) => set(() => ({ userEvents: value })),
 }));
 
@@ -38,14 +37,9 @@ export const useSettingPage = create((set) => ({
   setSettingPageState: (value) => set(() => ({ addPageState: value })),
 }));
 
-export const useTaskState = create((set) => ({
-  taskEdit: {},
-  setTastEdit: (value) => set(() => ({ taskEdit: value })),
-}));
-
-export const useEventState = create((set) => ({
-  eventEdit: {},
-  setEventEdit: (value) => set(() => ({ taskEdit: value })),
+export const useFeedbackPage = create((set) => ({
+  feedbackPageState: false,
+  setFeedbackPageState: (value) => set(() => ({ feedbackPageState: value })),
 }));
 
 export const useFormType = create((set) => ({

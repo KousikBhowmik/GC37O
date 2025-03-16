@@ -11,8 +11,13 @@ import {
 import { otpSendApi, otpVerifyApi } from "../controllers/otpController.js";
 import tokenVerification from "../middlewares/tokenVerification.js";
 import upload from "../middlewares/uploadMiddleware.js";
+import feedbackEmail from "../controllers/feedbackController.js";
 
 const authRouter = Router();
+
+
+authRouter.post("/feedback", tokenVerification, feedbackEmail)
+
 
 authRouter.get("/email-exist", emailExist);
 authRouter.post("/send-otp", otpSendApi);

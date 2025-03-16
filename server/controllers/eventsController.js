@@ -17,7 +17,7 @@ export const getAllEventsApi = async (req, res) => {
     if (!user) {
       return res
         .status(404)
-        .json({success: false,  message: "User not found or no events found" });
+        .json({ success: false, message: "User not found or no events found" });
     }
 
     res.status(200).json({ success: true, events: user.events });
@@ -44,7 +44,12 @@ export const createEventApi = async (req, res) => {
         .status(404)
         .json({ success: false, message: "User not found" });
 
-    const eventObj = { user: user._id, heading, description, eventTime };
+    const eventObj = {
+      user: user._id,
+      heading,
+      description,
+      eventTime: new Date(eventTime),
+    };
     const event = await EventsModel.create(eventObj);
 
     if (!event)
@@ -80,8 +85,6 @@ export const updateEventApi = async (req, res) => {
   const updateFields = req.body;
   console.log(eventId);
   console.log(updateFields);
-  
-  
 
   if (!eventId || !updateFields)
     return res
@@ -96,14 +99,20 @@ export const updateEventApi = async (req, res) => {
     );
 
     if (!updatedEvent) {
-      return res.status(404).json({success: false,  message: "Event not found" });
+      return res
+        .status(404)
+        .json({ success: false, message: "Event not found" });
     }
 
     res
       .status(200)
-      .json({ success: true, message: "Event updated successfully", updatedEvent });
+      .json({
+        success: true,
+        message: "Event updated successfully",
+        updatedEvent,
+      });
   } catch (error) {
-    res.status(500).json({success: false, message: "Server Error", error });
+    res.status(500).json({ success: false, message: "Server Error", error });
   }
 };
 
@@ -120,15 +129,19 @@ export const deleteEventApi = async (req, res) => {
   try {
     const deletedEvent = await EventsModel.findByIdAndDelete(eventId);
     if (!deletedEvent) {
-      return res.status(404).json({success: false, message: "Event not found" });
+      return res
+        .status(404)
+        .json({ success: false, message: "Event not found" });
     }
 
     await UserModel.findByIdAndUpdate(deletedEvent.user, {
       $pull: { events: eventId },
     });
 
-    res.status(200).json({success: true, message: "Event deleted successfully" });
+    res
+      .status(200)
+      .json({ success: true, message: "Event deleted successfully" });
   } catch (error) {
-    res.status(500).json({success: false, message: "Server Error", error });
+    res.status(500).json({ success: false, message: "Server Error", error });
   }
 };

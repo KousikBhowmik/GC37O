@@ -8,6 +8,7 @@ const AccountSettings = () => {
   const { loggedUser, setLoggedUser } = userLoggedUser();
 
   const [image, setImage] = useState(null);
+  const [username, setUsername] = useState(loggedUser.name || "");
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
@@ -63,10 +64,12 @@ const AccountSettings = () => {
             </label>
           </div>
           <input
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
             type="text"
             placeholder="username"
-            className="w-64 border border-gray-300 dark:border-gray-700 shadow-sm p-2 rounded-sm dark:bg-black dark:text-gray-400 placeholder:text-gray-400"
-            onChange={handleImageChange}
+            className="w-64 border border-gray-300 dark:border-gray-700 shadow-sm p-2 pl-4 rounded-sm dark:bg-black dark:text-gray-400 placeholder:text-gray-400"
+            
           />
           <div className="flex items-center justify-center gap-4 mt-2">
             <button className="cursor-pointer  px-4 py-1 rounded-sm bg-blue-500 text-white   ">

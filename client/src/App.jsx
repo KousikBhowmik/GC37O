@@ -26,7 +26,7 @@ const App = () => {
       {/* ------------------------ Notification container ---------------------- */}
       <ToastContainer
         position="top-right"
-        autoClose={5000}
+        autoClose={4000}
         hideProgressBar={true}
         newestOnTop={false}
         closeOnClick={false}
@@ -40,9 +40,11 @@ const App = () => {
       {/* ------------------------ Main Page Routes ---------------------- */}
       <div className="w-full h-screen">
         <Routes>
-          <Route path="/" element={<Navigate to="/dashboard" />} />
+          <Route path="/" element={<Navigate to="/dashboard/home" />} />
+
+          {/* Protected Dashboard Routes */}
           <Route
-            path="/dashboard"
+            path="/dashboard/*"
             element={
               <LoginValid>
                 <Dashboard />

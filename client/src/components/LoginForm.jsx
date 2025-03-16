@@ -26,22 +26,24 @@ const LoginForm = (props) => {
     if (!passwrodCheck(passwordInput)) return;
 
     setIsLoading((prev) => !prev);
+    try {
+      const { data } = await apiClient.post(
+        singUpRoute,
+        { email: emailInput, password: passwordInput },
+        { withCredentials: true }
+      );
 
-    const { data } = await apiClient.post(
-      singUpRoute,
-      { email: emailInput, password: passwordInput },
-      { withCredentials: true }
-    );
+      if (data?.success) {
+        toast.success("You are logged in");
 
-    if (data?.success) {
-      toast.success("You are logged in");
-      setLoggedUser(data.user);
-      setIsLoading((prev) => !prev);
-    } else {
-      toast.error(data?.message);
-      setLoggedUser("");
-      setIsLoading((prev) => !prev);
+        setLoggedUser(data.user);
+        navigate("/dashboard/home");
+      }
+    } catch (error) {
+      toast.error(error?.response?.data.message);
     }
+
+    setIsLoading((prev) => !prev);
   };
 
   return (

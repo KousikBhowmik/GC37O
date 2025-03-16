@@ -4,21 +4,18 @@ import { useEvents } from "../store/useStore";
 import EventsCard from "./EventsCard";
 import { useTaskPageState, useFormType } from "../store/useStore.js";
 import { IoMdAddCircleOutline } from "react-icons/io";
+import { PiDogLight } from "react-icons/pi";
 
 const EventsCom = () => {
   const { userEvents, setUserEvents } = useEvents();
   const { setAddPageState } = useTaskPageState();
-  const { setFormType} = useFormType();
+  const { setFormType } = useFormType();
 
   const breakpointColumns = {
     default: 4,
     1100: 3,
     768: 2,
     500: 1,
-  };
-
-  const deleteHandel = (index) => {
-    setUserEvents(userEvents.filter((_, i) => i != index));
   };
 
   return userEvents.length !== 0 ? (
@@ -43,18 +40,28 @@ const EventsCom = () => {
             </span>
           </div>
         </div>
-        {userEvents.map((cardValue, index) => (
-          <EventsCard
-            key={index}
-            cardValue={cardValue}
-            id={index}
-            deleteHandel={deleteHandel}
-          />
+        {userEvents.map((cardValue, _) => (
+          <EventsCard key={cardValue._id} cardValue={cardValue} />
         ))}
       </Masonry>
     </div>
   ) : (
-    <p>Loading...</p>
+    <div className="w-full  flex items-center justify-center h-[60vh]">
+      <div className=" px-10  bg-none mb-4 py-6 flex flex-col border-white  items-center justify-center gap-2 rounded-md   ">
+        <PiDogLight className="text-[200px] dark:text-white" />
+        <div
+          onClick={() => {
+            setFormType("event");
+            setAddPageState(true);
+          }}
+          className="flex items-center cursor-pointer justify-center border dark:border-gray-700 dark:bg-[#0a0a0a] rounded-sm"
+        >
+          <span className="text-xl py-2 px-6   col-span-3 font-serif dark:text-gray-200 ">
+            Add a new Event
+          </span>
+        </div>
+      </div>
+    </div>
   );
 };
 

@@ -7,17 +7,19 @@ import {
   useAccountSettingsPage,
   useTasks,
   useEvents,
+  useFeedbackPage,
 } from "../store/useStore.js";
 import AccountSettings from "./AccountSettings.jsx";
 import { toast } from "react-toastify";
 import { apiClient } from "../libs/axiosConfig.js";
 import { getEventsRoute, getTasksRoute } from "../utils/constant.js";
+import Feedback from "./Feedback.jsx";
 const Dashboard = () => {
   const { addPageState } = useTaskPageState();
   const { isAccountSettingsPage } = useAccountSettingsPage();
-
-  const { userTasks, setUserTasks } = useTasks();
-  const { userEvents, setUserEvents } = useEvents();
+  const { setUserTasks } = useTasks();
+  const { setUserEvents } = useEvents();
+  const { feedbackPageState } = useFeedbackPage();
 
   useEffect(() => {
     const getTasks = async () => {
@@ -28,7 +30,6 @@ const Dashboard = () => {
 
         if (data?.success) {
           setUserTasks(data?.tasks);
-          console.log(data);
         } else {
           toast.error("Error fetching user data!");
         }
@@ -49,14 +50,13 @@ const Dashboard = () => {
 
         if (data?.success) {
           setUserEvents(data?.events);
-          console.log(data);
         } else {
           toast.error("Error fetching user data!");
         }
       } catch (error) {
         toast.error("Error fetching user data!");
         setUserEvents([]);
-        console.error("Error:", error);
+        console.error("Error:", error.message);
       }
     };
     getEvents();
@@ -65,6 +65,7 @@ const Dashboard = () => {
     <div className="w-full min-h-screen dark:bg-black ">
       {addPageState && <AddTasksEvents />}
       {isAccountSettingsPage && <AccountSettings />}
+      { feedbackPageState && <Feedback/>}
 
       <Navbar />
 

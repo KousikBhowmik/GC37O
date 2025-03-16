@@ -6,13 +6,16 @@ const tokenVerification = async (req, res, next) => {
     const token = req.cookies?.["user-token"];
     if (!token) return res.status(401).json({ message: "Unauthorized" });
 
+    
+    
     const decodedToken = verifyJwtTokenFun(token);
-
+    
     const newToken = createTokenFun(decodedToken.userId);
-
+    
     res.cookie("user-token", newToken, cookieObj);
     
     req.userId = decodedToken.userId;
+    
     
     next();
   } catch (error) {

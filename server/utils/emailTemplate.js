@@ -23,3 +23,11 @@ export const singupOtpTemplate = (otp) => {
     </div>
     `;
 };
+
+
+export const textTemplate = (user, message) => {
+    return  `
+<h2>${user}</h2>
+<p>${message} </p>
+    `
+}

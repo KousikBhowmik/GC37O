@@ -4,20 +4,17 @@ import { useTasks } from "../store/useStore.js";
 import TasksCard from "./TasksCard.jsx";
 import { useTaskPageState, useFormType } from "../store/useStore.js";
 import { IoMdAddCircleOutline } from "react-icons/io";
+import { LuCat } from "react-icons/lu";
 const TasksCom = () => {
   const { userTasks, setUserTasks } = useTasks();
   const { setAddPageState } = useTaskPageState();
-  const { setFormType} = useFormType();
+  const { setFormType } = useFormType();
 
   const breakpointColumns = {
     default: 4,
     1100: 3,
     768: 2,
     500: 1,
-  };
-
-  const deleteHandel = (index) => {
-    setUserTasks(userTasks.filter((_, i) => i != index));
   };
 
   return userTasks.length !== 0 ? (
@@ -32,8 +29,9 @@ const TasksCom = () => {
           <IoMdAddCircleOutline
             className="text-6xl text-gray-400 cursor-pointer"
             onClick={() => {
-              setFormType("task")
-              setAddPageState(true)}}
+              setFormType("task");
+              setAddPageState(true);
+            }}
           />
           <div className="flex items-center justify-center">
             <span className="text-2xl col-span-3 font-serif dark:text-gray-200 ">
@@ -43,16 +41,29 @@ const TasksCom = () => {
         </div>
         {userTasks.map((cardValue, index) => (
           <TasksCard
-            key={index}
+            key={`${cardValue._id}${cardValue.status}`}
             cardValue={cardValue}
-            id={index}
-            deleteHandel={deleteHandel}
           />
         ))}
       </Masonry>
     </div>
   ) : (
-    <p>Loading...</p>
+    <div className="w-full  flex items-center justify-center h-[60vh]">
+          <div className=" px-10  bg-none mb-4 py-6 flex flex-col border-white  items-center justify-center gap-2 rounded-md   ">
+            <LuCat className="text-[200px] dark:text-white" />
+            <div
+              onClick={() => {
+                setFormType("task");
+                setAddPageState(true);
+              }}
+              className="flex items-center cursor-pointer justify-center border dark:border-gray-700 dark:bg-[#0a0a0a] rounded-sm"
+            >
+              <span className="text-xl py-2 px-6   col-span-3 font-serif dark:text-gray-200 ">
+                Add a new Task
+              </span>
+            </div>
+          </div>
+        </div>
   );
 };
 

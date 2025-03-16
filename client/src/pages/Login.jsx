@@ -47,32 +47,29 @@ const Login = () => {
       );
 
       if (data?.success) {
-        console.log(data);
-        toast.success("Google login succesful 🥳");
+        toast.success("Google login succesful");
         setLoggedUser(data.user);
-        setIsLoading((prev) => !prev);
-        navigate("/");
+        navigate("/dashboard/home");
       } else {
         toast.error(data?.message);
         setLoggedUser("");
-        setIsLoading((prev) => !prev);
       }
     } catch (error) {
       if (error.code === "auth/popup-closed-by-user") {
         toast.error("Sign-in cancelled!");
       } else {
-        toast.error("Something went wrong");
+        toast.error(error?.response?.data.message);
       }
       setLoggedUser("");
-      setIsLoading((prev) => !prev);
     }
+    setIsLoading((prev) => !prev);
   };
 
-  // useEffect(() => {
-  //   if (Cookies.get("user-token")) {
-  //     navigate("/dashboard");
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (Cookies.get("user-token")) {
+      navigate("/dashboard/home");
+    }
+  }, []);
 
   return (
     <div className="w-full h-screen flex items-center justify-center bg-blue-100 dark:bg-black-400  ">

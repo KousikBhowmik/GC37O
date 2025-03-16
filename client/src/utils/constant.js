@@ -6,12 +6,14 @@ export const serverURL = import.meta.env.VITE_SERVER_URL;
 // ------------------- Auth Routes -----------------------
 
 export const authRoute = "/api/authentication";
+export const feedbackRoute = `${authRoute}/feedback`;
 export const emailExistRoute = `${authRoute}/email-exist`;
 export const otpSendRoute = `${authRoute}/send-otp`;
 export const otpVerifyRoute = `${authRoute}/verify-otp`;
 export const singUpRoute = `${authRoute}/login-user`;
 export const googleLoginRoute = `${authRoute}/login-google`;
 export const getUserRoute = `${authRoute}/get-user`;
+export const resetPasswordRoute = `${authRoute}/reset-password`;
 
 // ------------------------ Task Routes ----------------------
 
