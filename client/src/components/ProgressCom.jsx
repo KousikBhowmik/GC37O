@@ -2,18 +2,56 @@ import React, { useEffect, useState } from "react";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { motion } from "framer-motion";
 import { ScrollText, Zap, AlarmClockMinus, CircleCheckBig } from "lucide-react";
-import { useTaskPageState, useFormType } from "../store/useStore.js";
+import { useTaskPageState, useFormType, useTasks } from "../store/useStore.js";
 
 const ProgressCom = () => {
   const [toggleText, setToggleText] = useState("tasks");
   const { setAddPageState } = useTaskPageState();
-  const { setFormType} = useFormType();
+  const { setFormType } = useFormType();
+  const [progressState, setProgressState] = useState({
+    todo: "w-0",
+    progress: "w-0",
+    pending: "w-0",
+    completed: "w-0",
+  });
+  const { userTasks } = useTasks();
   useEffect(() => {
     const interval = setInterval(() => {
       setToggleText(toggleText === "tasks" ? "events" : "tasks");
     }, 3000);
     return () => clearInterval(interval);
   }, [toggleText]);
+
+  useEffect(() => {
+    if (userTasks.length === 0) {
+      setProgressState({
+        todo: "w-0",
+        progress: "w-0",
+        pending: "w-0",
+        completed: "w-0",
+      });
+      return;
+    }
+
+    const todo = userTasks.filter((item) => item.status === "todo").length;
+    const progress = userTasks.filter(
+      (item) => item.status === "progress"
+    ).length;
+    const pending = userTasks.filter(
+      (item) => item.status === "pending"
+    ).length;
+    const completed = userTasks.filter(
+      (item) => item.status === "completed"
+    ).length;
+
+    setProgressState((prev) => ({
+      ...prev,
+      todo: `w-[${(todo / userTasks.length) * 100}%]`,
+      progress: `w-[${(progress / userTasks.length) * 100}%]`,
+      pending: `w-[${(pending / userTasks.length) * 100}%]`,
+      completed: `w-[${(completed / userTasks.length) * 100}%]`,
+    }));
+  }, [userTasks]);
 
   return (
     <div className=" w-full h-[500px] items-center grid sm:mb-5 lg:mb-0 grid-rows-5 gap-4 pr-3 ">
@@ -46,21 +84,27 @@ const ProgressCom = () => {
         <ScrollText className="text-[#b875fb] size-10  rounded-full bg-white p-2 place-self-center" />
         <div className="w-[70%] flex flex-col justify-between py-3">
           <p className="text-white text-lg font-semibold">Todo</p>
-          <div className="w-full  rounded-full h-2"></div>
+          <div
+            className={`${progressState?.todo} bg-white h-2 rounded-full `}
+          ></div>
         </div>
       </div>
       <div className="bg-gradient-to-br from-[#fe8421] to-[#fba466] rounded-2xl pl-4 pr-6 py-1 flex  gap-3 shadow-xl ">
         <Zap className="text-[#fe8421] size-10  rounded-full bg-white p-2 place-self-center" />
         <div className="w-[70%] flex flex-col justify-between py-3">
           <p className="text-white text-lg font-semibold"> In Progress</p>
-          <div className="w-full rounded-full h-2"></div>
+          <div
+            className={`${progressState?.progress} bg-white h-2 rounded-full `}
+          ></div>
         </div>
       </div>
       <div className="bg-gradient-to-br from-[#33fa93] to-[#39e7ad] rounded-2xl pl-4 pr-6 py-1 flex  gap-3 shadow-xl ">
         <CircleCheckBig className="text-[#33fa93] size-10  rounded-full bg-white p-2 place-self-center" />
         <div className="w-[70%] flex flex-col justify-between py-3">
           <p className="text-white text-lg font-semibold"> Completed</p>
-          <div className="w-full  rounded-full h-2"></div>
+          <div
+            className={`${progressState?.completed} bg-white h-2 rounded-full `}
+          ></div>
         </div>
       </div>
       <div className="bg-gradient-to-br from-[#fc4845] to-[#ff7961] rounded-2xl pl-4 pr-6 py-1 flex  gap-3 shadow-xl ">
@@ -69,7 +113,10 @@ const ProgressCom = () => {
         <div className="w-[70%] flex flex-col justify-between py-3">
           <p className="text-white text-lg font-semibold"> Pending</p>
           <div className="w-ful  rounded-full h-2">
-            <div className="w-[70%] bg-white h-2 rounded-full "></div>
+            <div
+              // @ts-ignore
+              className={`${progressState?.pending} bg-white h-2 rounded-full `}
+            ></div>
           </div>
         </div>
       </div>
