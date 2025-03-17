@@ -26,17 +26,17 @@ export const emailExist = async (req, res) => {
 
   try {
     const getEmail = await UserModel.findOne({ email });
-
-    if (getEmail && getEmail.email === email) {
+    
+    if (!getEmail) {
+      res.status(200).json({
+        success: false,
+        message: "Email doesn't exist",
+      });
+    } else if (getEmail && getEmail.email === email) {
       res.status(200).json({
         success: true,
         message: "Email already exists",
         loginType: getEmail.passwordType,
-      });
-    } else {
-      res.status(200).json({
-        success: false,
-        message: "Email doesn't exist",
       });
     }
   } catch (error) {
