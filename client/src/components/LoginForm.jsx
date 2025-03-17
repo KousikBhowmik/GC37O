@@ -60,11 +60,9 @@ const LoginForm = (props) => {
         { email: emailInput, password: passwordInput },
         { withCredentials: true }
       );
-
       if (data?.success) {
-        toast.success("You are logged in");
-
         setLoggedUser(data.user);
+        toast.success("You are logged in");
         navigate("/dashboard/home");
       }
     } catch (error) {

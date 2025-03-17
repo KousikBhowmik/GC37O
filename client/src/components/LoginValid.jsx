@@ -8,13 +8,19 @@ import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 
 const LoginValid = ({ children }) => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const { loggedUser, setLoggedUser } = userLoggedUser();
   const navigate = useNavigate();
 
   useEffect(() => {
+    const token = Cookies.get("user-token");
+
+    if (!token) {
+      navigate("/login");
+      return;
+    }
+
     const getUser = async () => {
-      setIsLoading((prev) => !prev);
       try {
         const { data } = await apiClient.get(getUserRoute, {
           withCredentials: true,
@@ -23,21 +29,25 @@ const LoginValid = ({ children }) => {
         if (data?.success) {
           setLoggedUser(data.user);
         } else {
-          handleAuthFailure(data?.message || "Authentication failed!");
+          handleAuthFailure();
         }
       } catch (error) {
-        handleAuthFailure("Error fetching user data!");
+        console.error(
+          "Authentication Error:",
+          error?.response?.data || error.message
+        );
+        handleAuthFailure();
+      } finally {
+        setIsLoading(false);
       }
-      setIsLoading((prev) => !prev);
     };
 
-    const handleAuthFailure = (message) => {
-      navigate("/login");
+    const handleAuthFailure = () => {
       Cookies.remove("user-token");
+      navigate("/login");
     };
 
-    if (Cookies.get("user-token")) getUser();
-    else navigate("/login");
+    getUser();
   }, []);
 
   if (isLoading)

@@ -51,7 +51,7 @@ const SingupForm = (props) => {
           },
         });
         if (data?.success && data.loginType !== "google") {
-          toast.info("Email does not exist");
+          toast.info("Email already exist");
           toast.info("Please Login with email/pasword");
           setPasswordInput("");
           setIsLoading((prev) => !prev);
@@ -170,6 +170,7 @@ const SingupForm = (props) => {
       );
       if (data?.success) {
         toast.success("SingUp successfully");
+        setLoggedUser(data.user);
         setIsLoading((prev) => !prev);
         navigate("/dashboard/home");
       } else {
@@ -213,6 +214,7 @@ const SingupForm = (props) => {
     }
     setEmailInput("");
     setPasswordInput("");
+    setSingupState("sendOtp");
     setIsLoading((prev) => !prev);
     setLoginPage("login");
   };

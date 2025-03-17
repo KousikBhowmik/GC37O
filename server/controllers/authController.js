@@ -128,7 +128,7 @@ export const loginWithGoogle = async (req, res) => {
     if (user?.passwordType === "custom")
       return res
         .status(400)
-        .json({ success: false, message: "Login with email and password" });
+        .json({ success: true, message: "Login with email and password" });
 
     if (!user) {
       const hashPassword = await hashPasswordFUn(uid);

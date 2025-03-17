@@ -47,7 +47,7 @@ const Login = () => {
       );
 
       if (data?.success) {
-        toast.success("Google login succesful");
+        toast.success("Logged in with Google");
         setLoggedUser(data.user);
         navigate("/dashboard/home");
       } else {

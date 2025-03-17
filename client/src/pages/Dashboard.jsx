@@ -65,7 +65,7 @@ const Dashboard = () => {
     <div className="w-full min-h-screen dark:bg-black ">
       {addPageState && <AddTasksEvents />}
       {isAccountSettingsPage && <AccountSettings />}
-      { feedbackPageState && <Feedback/>}
+      {feedbackPageState && <Feedback />}
 
       <Navbar />
 
