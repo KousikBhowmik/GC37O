@@ -25,12 +25,20 @@ export const emailExist = async (req, res) => {
   }
 
   try {
-    const isEmail = await UserModel.exists({ email });
+    const getEmail = await UserModel.findOne({ email });
 
-    res.status(200).json({
-      success: !!isEmail,
-      message: isEmail ? "Email already exists" : "Email doesn't exist",
-    });
+    if (getEmail && getEmail.email === email) {
+      res.status(200).json({
+        success: true,
+        message: "Email already exists",
+        loginType: getEmail.passwordType,
+      });
+    } else {
+      res.status(200).json({
+        success: false,
+        message: "Email doesn't exist",
+      });
+    }
   } catch (error) {
     console.error("Error checking email:", error);
     res.status(500).json({
@@ -73,12 +81,10 @@ export const loginUser = async (req, res) => {
       });
       isUserExist = user ? true : false;
     }
-    console.log("three");
     if (user && isUserExist) {
       const token = createTokenFun(user._id);
 
       res.cookie("user-token", token, cookieObj);
-      console.log("four");
       res.status(200).json({
         success: true,
         message: "user logged in successfully",
@@ -101,7 +107,6 @@ export const loginUser = async (req, res) => {
     });
   }
 };
-
 
 // ------------------------ Api for Sing up and Login user with google --------------------
 

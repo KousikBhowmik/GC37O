@@ -50,20 +50,54 @@ const SingupForm = (props) => {
             email: emailInput,
           },
         });
-
-        if (data?.success) {
-          toast.info("Exail already exist");
+        if (data?.success && data.loginType !== "google") {
+          toast.info("Email does not exist");
+          toast.info("Please Login with email/pasword");
+          setPasswordInput("");
           setIsLoading((prev) => !prev);
+          setLoginPage("login");
+          return;
+        } else if (data?.success && data.loginType === "google") {
+          toast.info("Account linked with Google");
+          toast.info("Please Login with Google");
+          setEmailInput("");
+          setIsLoading((prev) => !prev);
+          setLoginPage("login");
           return;
         }
       } catch (error) {
         toast.error(error?.response?.data.message);
         return;
       }
+    } else {
+      try {
+        const { data } = await apiClient.get(emailExistRoute, {
+          params: {
+            email: emailInput,
+          },
+        });
+
+        if (!data?.success) {
+          toast.info("Email does not exist");
+          setIsLoading((prev) => !prev);
+          setLoginPage("singUp");
+          return;
+        } else if (data?.success && data.loginType === "google") {
+          toast.info("Account linked with Google");
+          toast.info("Please Login with Google");
+          setEmailInput("");
+          setIsLoading((prev) => !prev);
+          setLoginPage("login");
+          return;
+        }
+      } catch (error) {
+        toast.error(error?.response?.data.message);
+        setIsLoading((prev) => !prev);
+        return;
+      }
     }
 
     try {
-      // @ts-ignore
       const { data } = await apiClient.post(
         otpSendRoute,
         {
@@ -114,6 +148,13 @@ const SingupForm = (props) => {
 
   const userRegister = async () => {
     if (!passwrodCheck(passwordInput)) return;
+    if (passwordInput.length === 0) {
+      toast.info("Enter a Password");
+      return;
+    } else if (passwordInput.length > 100) {
+      toast.info("Password is too long");
+      return;
+    }
     if (!emailCheck(emailInput)) return;
     if (!(passwordInput === reEnterPasssword)) {
       toast.error("Both password should be match");
@@ -128,21 +169,29 @@ const SingupForm = (props) => {
         { withCredentials: true }
       );
       if (data?.success) {
-        toast.success("SingUp successfully 🥳");
-        setLoggedUser(data.user);
+        toast.success("SingUp successfully");
+        setIsLoading((prev) => !prev);
         navigate("/dashboard/home");
       } else {
         toast.error(data?.message);
-        setLoggedUser("");
+        setIsLoading((prev) => !prev);
         setSingupState("sendOtp");
       }
     } catch (error) {
       toast.error(error?.response?.data.message);
+      setIsLoading((prev) => !prev);
+      setSingupState("sendOtp");
     }
-    setIsLoading((prev) => !prev);
   };
 
   const resetPasswordFun = async () => {
+    if (passwordInput.length === 0) {
+      toast.info("Enter a Password");
+      return;
+    } else if (passwordInput.length > 100) {
+      toast.info("Password is too long");
+      return;
+    }
     if (!passwrodCheck(passwordInput)) return;
     if (!emailCheck(emailInput)) return;
     if (!(passwordInput === reEnterPasssword)) {

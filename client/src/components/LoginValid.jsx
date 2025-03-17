@@ -35,8 +35,10 @@ const LoginValid = ({ children }) => {
       navigate("/login");
       Cookies.remove("user-token");
     };
-    if (!loggedUser) getUser();
-  }, [loggedUser, setLoggedUser, navigate]);
+
+    if (Cookies.get("user-token")) getUser();
+    else navigate("/login");
+  }, []);
 
   if (isLoading)
     return (

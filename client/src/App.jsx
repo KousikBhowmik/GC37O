@@ -8,6 +8,7 @@ import Login from "./pages/Login.jsx";
 import HomeCom from "./components/HomeCom.jsx";
 import TasksCom from "./components/TasksCom.jsx";
 import EventsCom from "./components/EventsCom.jsx";
+import Page404 from "./pages/Page404.jsx";
 const App = () => {
   const { isDarkMode } = useDarkMode();
 
@@ -55,9 +56,11 @@ const App = () => {
             <Route path="home" element={<HomeCom />} />
             <Route path="tasks" element={<TasksCom />} />
             <Route path="events" element={<EventsCom />} />
+            <Route path="*" element={<Page404 />} />
           </Route>
 
           <Route path="/login" element={<Login />} />
+          <Route path="*" element={<Page404 />} />
         </Routes>
       </div>
     </div>

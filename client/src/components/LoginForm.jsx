@@ -3,7 +3,7 @@ import { FaRegEye } from "react-icons/fa6";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { emailCheck, passwrodCheck } from "../utils/helperFunctions";
 import { apiClient } from "../libs/axiosConfig";
-import { singUpRoute } from "../utils/constant";
+import { emailExistRoute, singUpRoute } from "../utils/constant";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { userLoggedUser } from "../store/useStore.js";
@@ -23,9 +23,37 @@ const LoginForm = (props) => {
 
   const loginHandel = async () => {
     if (!emailCheck(emailInput)) return;
-    if (!passwrodCheck(passwordInput)) return;
+    if (passwordInput.length === 0) {
+      toast.info("Enter a Password");
+      return;
+    } else if (passwordInput.length > 100) {
+      toast.info("Password is too long");
+      return;
+    }
 
     setIsLoading((prev) => !prev);
+    try {
+      const { data } = await apiClient.get(emailExistRoute, {
+        params: {
+          email: emailInput,
+        },
+      });
+      if (!data?.success) {
+        toast.info("Email does not exist");
+        setIsLoading((prev) => !prev);
+        return;
+      } else if (data?.success && data.loginType === "google") {
+        toast.info("Account linked with Google");
+        toast.info("Please Login with Google");
+        setIsLoading((prev) => !prev);
+        return;
+      }
+    } catch (error) {
+      toast.error(error?.response?.data.message);
+      setIsLoading((prev) => !prev);
+      return;
+    }
+
     try {
       const { data } = await apiClient.post(
         singUpRoute,
@@ -81,7 +109,10 @@ const LoginForm = (props) => {
         <p className="text-sm  text-center dark:text-white">
           Don't have an account?{" "}
           <span
-            onClick={() => setLoginPage("singUp")}
+            onClick={() => {
+              setPasswordInput("");
+              setLoginPage("singUp");
+            }}
             className="cursor-pointer font-semibold text-blue-500 "
           >
             SingUp
@@ -89,7 +120,10 @@ const LoginForm = (props) => {
         </p>
         <p className="text-sm  text-center dark:text-white">
           <span
-            onClick={() => setLoginPage("resetPass")}
+            onClick={() => {
+              setPasswordInput("");
+              setLoginPage("resetPass");
+            }}
             className="cursor-pointer font-semibold text-blue-500 mr-1 "
           >
             Reset
