@@ -23,8 +23,8 @@ const Navbar = () => {
 
   const logOutFun = () => {
     Cookies.remove("user-token");
-    navigate("/login")
     setLoggedUser("");
+    navigate("/");
   };
 
   return (

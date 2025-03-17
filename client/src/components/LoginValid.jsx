@@ -12,11 +12,14 @@ const LoginValid = ({ children }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (loggedUser !== "") {
+      setIsLoading(false);
+      return;
+    }
+
     const token = Cookies.get("user-token");
 
     if (!token) {
-      console.log("who eat my cookies, fuck you");
-      
       navigate("/login");
       return;
     }
@@ -49,7 +52,7 @@ const LoginValid = ({ children }) => {
     };
 
     getUser();
-  }, [loggedUser]);
+  }, []);
 
   if (isLoading)
     return (

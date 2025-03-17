@@ -32,7 +32,7 @@ const Login = () => {
   const [singupState, setSingupState] = useState("sendOtp");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const { setLoggedUser } = userLoggedUser();
+  const { loggedUser, setLoggedUser } = userLoggedUser();
 
   const loginWithGoogle = async () => {
     try {
@@ -66,10 +66,10 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if (Cookies.get("user-token")) {
+    if (Cookies.get("user-token") || loggedUser !== "") {
       navigate("/dashboard/home");
     }
-  }, []);
+  }, [loggedUser]);
 
   return (
     <div className="w-full h-screen flex items-center justify-center bg-blue-100 dark:bg-black-400  ">
