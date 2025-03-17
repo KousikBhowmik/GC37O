@@ -9,10 +9,10 @@ const ProgressCom = () => {
   const { setAddPageState } = useTaskPageState();
   const { setFormType } = useFormType();
   const [progressState, setProgressState] = useState({
-    todo: "w-0",
-    progress: "w-0",
-    pending: "w-0",
-    completed: "w-0",
+    todo: 0,
+    progress: 0,
+    pending: 0,
+    completed: 0,
   });
   const { userTasks } = useTasks();
   useEffect(() => {
@@ -22,36 +22,44 @@ const ProgressCom = () => {
     return () => clearInterval(interval);
   }, [toggleText]);
 
-useEffect(() => {
-  if (userTasks.length === 0) {
+  useEffect(() => {
+    if (userTasks.length === 0) {
+      setProgressState({
+        todo: 0,
+        progress: 0,
+        pending: 0,
+        completed: 0,
+      });
+      return;
+    }
+
+    let totalTasks = userTasks.length;
+    let todo = userTasks.filter((item) => item.status === "todo").length;
+    todo = Math.floor((todo / totalTasks) * 100);
+    let progress = userTasks.filter(
+      (item) => item.status === "progress"
+    ).length;
+    progress = Math.floor((progress / totalTasks) * 100);
+    let pending = userTasks.filter((item) => item.status === "pending").length;
+    pending = Math.floor((pending / totalTasks) * 100);
+    let completed = userTasks.filter(
+      (item) => item.status === "completed"
+    ).length;
+
+    completed = Math.floor((completed / totalTasks) * 100);
+    console.log(`Todo: ${todo}`);
+    console.log(`Pro: ${progress}`);
+    console.log(`Pen: ${pending}`);
+    console.log(`Com: ${completed}`);
+    
+
     setProgressState({
-      todo: "w-0",
-      progress: "w-0",
-      pending: "w-0",
-      completed: "w-0",
+      todo: todo,
+      progress: progress,
+      pending: pending,
+      completed: completed,
     });
-    return;
-  }
-
-  const totalTasks = userTasks.length ; // Prevent division by zero
-  const todo = userTasks.filter((item) => item.status === "todo").length;
-  const progress = userTasks.filter(
-    (item) => item.status === "progress"
-  ).length;
-  const pending = userTasks.filter((item) => item.status === "pending").length;
-  const completed = userTasks.filter(
-    (item) => item.status === "completed"
-  ).length;
-
-  
-  setProgressState({
-    todo: `w-[${(todo / totalTasks) * 100}%]`,
-    progress: `w-[${(progress / totalTasks) * 100}%]`,
-    pending: `w-[${(pending / totalTasks) * 100}%]`,
-    completed: `w-[${(completed / totalTasks) * 100}%]`,
-  });
-}, [userTasks]);
-
+  }, [userTasks]);
 
   return (
     <div className=" w-full h-[500px] items-center grid sm:mb-5 lg:mb-0 grid-rows-5 gap-4 pr-3 ">
@@ -85,7 +93,8 @@ useEffect(() => {
         <div className="w-[70%] flex flex-col justify-between py-3">
           <p className="text-white text-lg font-semibold">Todo</p>
           <div
-            className={`${progressState.todo} bg-white h-2 rounded-full `}
+            className="bg-white h-2 rounded-full"
+            style={{ width: `${progressState.todo}%` }}
           ></div>
         </div>
       </div>
@@ -94,7 +103,8 @@ useEffect(() => {
         <div className="w-[70%] flex flex-col justify-between py-3">
           <p className="text-white text-lg font-semibold"> In Progress</p>
           <div
-            className={`${progressState.progress} bg-white h-2 rounded-full `}
+            className="bg-white h-2 rounded-full"
+            style={{ width: `${progressState.progress}%` }}
           ></div>
         </div>
       </div>
@@ -103,7 +113,8 @@ useEffect(() => {
         <div className="w-[70%] flex flex-col justify-between py-3">
           <p className="text-white text-lg font-semibold"> Completed</p>
           <div
-            className={`${progressState.completed} bg-white h-2 rounded-full `}
+            className="bg-white h-2 rounded-full"
+            style={{ width: `${progressState.completed}%` }}
           ></div>
         </div>
       </div>
@@ -114,8 +125,8 @@ useEffect(() => {
           <p className="text-white text-lg font-semibold"> Pending</p>
           <div className="w-ful  rounded-full h-2">
             <div
-              // @ts-ignore
-              className={`${progressState.pending} bg-white h-2 rounded-full `}
+              className="bg-white h-2 rounded-full"
+              style={{ width: `${progressState.pending}%` }}
             ></div>
           </div>
         </div>
