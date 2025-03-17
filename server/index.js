@@ -14,7 +14,6 @@ const app = express();
 
 // -------------------- Middlewares ----------------------
 app.use(
-  // cors()
   cors({
     // @ts-ignore
     origin: [process.env.CLIENT_URL],
@@ -63,10 +62,5 @@ app.use("/api/events", eventRoutes);
 
 // ----------------- Server starting ------------------
 
-const PORT = process.env.PORT || 8001;
-
-app.listen(PORT, () => {
-  console.log(`Server is running on ${PORT}`);
-});
 
 export default app;

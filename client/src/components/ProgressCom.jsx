@@ -22,36 +22,36 @@ const ProgressCom = () => {
     return () => clearInterval(interval);
   }, [toggleText]);
 
-  useEffect(() => {
-    if (userTasks.length === 0) {
-      setProgressState({
-        todo: "w-0",
-        progress: "w-0",
-        pending: "w-0",
-        completed: "w-0",
-      });
-      return;
-    }
+useEffect(() => {
+  if (userTasks.length === 0) {
+    setProgressState({
+      todo: "w-0",
+      progress: "w-0",
+      pending: "w-0",
+      completed: "w-0",
+    });
+    return;
+  }
 
-    const todo = userTasks.filter((item) => item.status === "todo").length;
-    const progress = userTasks.filter(
-      (item) => item.status === "progress"
-    ).length;
-    const pending = userTasks.filter(
-      (item) => item.status === "pending"
-    ).length;
-    const completed = userTasks.filter(
-      (item) => item.status === "completed"
-    ).length;
+  const totalTasks = userTasks.length ; // Prevent division by zero
+  const todo = userTasks.filter((item) => item.status === "todo").length;
+  const progress = userTasks.filter(
+    (item) => item.status === "progress"
+  ).length;
+  const pending = userTasks.filter((item) => item.status === "pending").length;
+  const completed = userTasks.filter(
+    (item) => item.status === "completed"
+  ).length;
 
-    setProgressState((prev) => ({
-      ...prev,
-      todo: `w-[${(todo / userTasks.length) * 100}%]`,
-      progress: `w-[${(progress / userTasks.length) * 100}%]`,
-      pending: `w-[${(pending / userTasks.length) * 100}%]`,
-      completed: `w-[${(completed / userTasks.length) * 100}%]`,
-    }));
-  }, [userTasks]);
+  
+  setProgressState({
+    todo: `w-[${(todo / totalTasks) * 100}%]`,
+    progress: `w-[${(progress / totalTasks) * 100}%]`,
+    pending: `w-[${(pending / totalTasks) * 100}%]`,
+    completed: `w-[${(completed / totalTasks) * 100}%]`,
+  });
+}, [userTasks]);
+
 
   return (
     <div className=" w-full h-[500px] items-center grid sm:mb-5 lg:mb-0 grid-rows-5 gap-4 pr-3 ">
@@ -85,7 +85,7 @@ const ProgressCom = () => {
         <div className="w-[70%] flex flex-col justify-between py-3">
           <p className="text-white text-lg font-semibold">Todo</p>
           <div
-            className={`${progressState?.todo} bg-white h-2 rounded-full `}
+            className={`${progressState.todo} bg-white h-2 rounded-full `}
           ></div>
         </div>
       </div>
@@ -94,7 +94,7 @@ const ProgressCom = () => {
         <div className="w-[70%] flex flex-col justify-between py-3">
           <p className="text-white text-lg font-semibold"> In Progress</p>
           <div
-            className={`${progressState?.progress} bg-white h-2 rounded-full `}
+            className={`${progressState.progress} bg-white h-2 rounded-full `}
           ></div>
         </div>
       </div>
@@ -103,7 +103,7 @@ const ProgressCom = () => {
         <div className="w-[70%] flex flex-col justify-between py-3">
           <p className="text-white text-lg font-semibold"> Completed</p>
           <div
-            className={`${progressState?.completed} bg-white h-2 rounded-full `}
+            className={`${progressState.completed} bg-white h-2 rounded-full `}
           ></div>
         </div>
       </div>
@@ -115,7 +115,7 @@ const ProgressCom = () => {
           <div className="w-ful  rounded-full h-2">
             <div
               // @ts-ignore
-              className={`${progressState?.pending} bg-white h-2 rounded-full `}
+              className={`${progressState.pending} bg-white h-2 rounded-full `}
             ></div>
           </div>
         </div>
