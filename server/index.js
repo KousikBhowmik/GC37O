@@ -37,6 +37,7 @@ admin.initializeApp({
   }),
 });
 
+
 admin
   .auth()
   .listUsers(1) //-------------- Fetching 1 user for test ------------------
@@ -60,12 +61,6 @@ app.use("/api/authentication", authRouter);
 app.use("/api/tasks", taskRoutes);
 app.use("/api/events", eventRoutes);
 
-// ----------------- Server starting ------------------
 
-const PORT = process.env.PORT || 8001;
-
-app.listen(PORT, () => {
-  console.log(`Server is running on ${PORT}`);
-});
 
 export default app;

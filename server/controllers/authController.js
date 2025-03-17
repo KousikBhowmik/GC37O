@@ -102,6 +102,7 @@ export const loginUser = async (req, res) => {
   }
 };
 
+
 // ------------------------ Api for Sing up and Login user with google --------------------
 
 export const loginWithGoogle = async (req, res) => {
