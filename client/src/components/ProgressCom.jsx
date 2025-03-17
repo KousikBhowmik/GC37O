@@ -35,23 +35,18 @@ const ProgressCom = () => {
 
     let totalTasks = userTasks.length;
     let todo = userTasks.filter((item) => item.status === "todo").length;
-    todo = Math.floor((todo / totalTasks) * 100);
     let progress = userTasks.filter(
       (item) => item.status === "progress"
     ).length;
-    progress = Math.floor((progress / totalTasks) * 100);
     let pending = userTasks.filter((item) => item.status === "pending").length;
-    pending = Math.floor((pending / totalTasks) * 100);
     let completed = userTasks.filter(
       (item) => item.status === "completed"
     ).length;
 
+    todo = Math.floor((todo / totalTasks) * 100);
+    progress = Math.floor((progress / totalTasks) * 100);
+    pending = Math.floor((pending / totalTasks) * 100);
     completed = Math.floor((completed / totalTasks) * 100);
-    console.log(`Todo: ${todo}`);
-    console.log(`Pro: ${progress}`);
-    console.log(`Pen: ${pending}`);
-    console.log(`Com: ${completed}`);
-    
 
     setProgressState({
       todo: todo,
