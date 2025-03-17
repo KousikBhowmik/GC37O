@@ -34,7 +34,7 @@ GC370 is a Task + Event listing application designed to help teachers efficientl
 ### Steps:
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-repo-url/GC370.git
+   git clone https://github.com/KousikBhowmik/GC37O.git
    cd GC370
    ```
 2. Install dependencies:
