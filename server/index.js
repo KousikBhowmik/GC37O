@@ -13,14 +13,7 @@ dotenv.config();
 const app = express();
 
 // -------------------- Middlewares ----------------------
-app.use(
-  cors({
-    // @ts-ignore
-    origin: [process.env.CLIENT_URL],
-    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
-    credentials: true,
-  })
-);
+app.use(cors({ origin: "https://gc37o.vercel.app", credentials: true }));
 // @ts-ignore
 app.use(cookieParser());
 app.use(express.json());
