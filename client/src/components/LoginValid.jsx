@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import LoadingCom from "../components/LoadingCom.jsx";
 import { apiClient } from "../libs/axiosConfig.js";
 import { getUserRoute } from "../utils/constant.js";
-import { toast } from "react-toastify";
 import { userLoggedUser } from "../store/useStore.js";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
@@ -16,6 +15,8 @@ const LoginValid = ({ children }) => {
     const token = Cookies.get("user-token");
 
     if (!token) {
+      console.log("who eat my cookies, fuck you");
+      
       navigate("/login");
       return;
     }
@@ -48,7 +49,7 @@ const LoginValid = ({ children }) => {
     };
 
     getUser();
-  }, []);
+  }, [loggedUser]);
 
   if (isLoading)
     return (
