@@ -62,5 +62,10 @@ app.use("/api/events", eventRoutes);
 
 // ----------------- Server starting ------------------
 
+const PORT = process.env.PORT || 8001;
+
+app.listen(PORT, () => {
+  console.log(`Server is running on ${PORT}`);
+});
 
 export default app;
